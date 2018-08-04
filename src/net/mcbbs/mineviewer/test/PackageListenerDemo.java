@@ -1,9 +1,14 @@
 package net.mcbbs.mineviewer.test;
 
+import org.bukkit.entity.Player;
+
+import net.mcbbs.mineviewer.MineViewer;
 import net.mcbbs.mineviewer.pluginmessage.listener.PackageListener;
 import net.mcbbs.mineviewer.pluginmessage.listener.PackageReceiveEvent;
 import net.mcbbs.mineviewer.pluginmessage.listener.PackageSendEvent;
 import net.mcbbs.mineviewer.pluginmessage.listener.Priority;
+import net.mcbbs.mineviewer.pluginmessage.packages.InputPackageDemo;
+import net.mcbbs.mineviewer.pluginmessage.packages.OutputPackageDemo;
 
 public class PackageListenerDemo extends PackageListener {
 
@@ -13,7 +18,10 @@ public class PackageListenerDemo extends PackageListener {
 
 	@Override
 	public void onPackageReceive(PackageReceiveEvent e) {
-		System.out.println("Receive Package:" + e.getID());
+		if (e.getID() == 1) {
+			InputPackageDemo demo = (InputPackageDemo) e.getPackage();
+			System.out.println(demo.getCustomString());
+		}
 
 	}
 
@@ -21,6 +29,10 @@ public class PackageListenerDemo extends PackageListener {
 	public void onPackageSend(PackageSendEvent e) {
 		System.out.println("Package Send:" + e.getID());
 
+	}
+
+	public void sendCustomString(String arg, Player p) {
+		MineViewer.getPluginMessageManager().sendPackage(new OutputPackageDemo(arg), p);
 	}
 
 }

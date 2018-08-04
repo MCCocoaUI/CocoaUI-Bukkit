@@ -32,5 +32,6 @@ public class PackageReceiveEvent {
 	public Player getPlayer() {
 		return this.p;
 	}
+	public AbstractInPackage getPackage() {return pack;}
 
 }

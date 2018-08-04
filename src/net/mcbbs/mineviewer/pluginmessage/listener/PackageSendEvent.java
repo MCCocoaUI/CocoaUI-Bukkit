@@ -34,5 +34,6 @@ public class PackageSendEvent {
 	public Player getPlayer() {
 		return this.p;
 	}
+	public AbstractOutPackage getPackage() {return pack;}
 
 }

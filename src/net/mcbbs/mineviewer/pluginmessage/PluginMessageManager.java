@@ -15,11 +15,14 @@ import net.mcbbs.mineviewer.MineViewer;
 import net.mcbbs.mineviewer.pluginmessage.listener.PackageListener;
 import net.mcbbs.mineviewer.pluginmessage.listener.PackageReceiveEvent;
 import net.mcbbs.mineviewer.pluginmessage.listener.PackageSendEvent;
+import net.mcbbs.mineviewer.pluginmessage.packages.InputPackageDemo;
 
 public class PluginMessageManager {
 	private Map<Integer, Class<? extends AbstractInPackage>> classes = Maps.newHashMap();
 	private TreeSet<PackageListener> listeners = Sets.newTreeSet();
-
+	public PluginMessageManager() {
+		this.init();
+	}
 	public void receiveData(byte[] data, Player p) {
 		ByteArrayDataInput in = ByteStreams.newDataInput(data);
 		int i = in.readInt();
@@ -75,6 +78,10 @@ public class PluginMessageManager {
 		for (PackageListener p : this.listeners) {
 			p.onPackageReceive(e);
 		}
+	}
+	
+	private void init() {
+		this.registerPackage(1, InputPackageDemo.class);
 	}
 
 }
