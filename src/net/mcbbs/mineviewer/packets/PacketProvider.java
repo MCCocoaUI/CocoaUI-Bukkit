@@ -7,6 +7,7 @@
 
 package net.mcbbs.mineviewer.packets;
 
+import com.google.common.io.ByteArrayDataInput;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +19,7 @@ import java.util.Map;
 public abstract class PacketProvider<T extends Packet>{
     public static final Map<Integer, PacketProvider<? extends Packet>> PacketProviders = new HashMap<>();
     
-    public abstract T readPacket(byte[] data);
+    public abstract T readPacket(ByteArrayDataInput data);
     
     public abstract T createPacket();
     

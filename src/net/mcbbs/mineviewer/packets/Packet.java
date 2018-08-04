@@ -6,6 +6,7 @@
  */
 package net.mcbbs.mineviewer.packets;
 
+import com.google.common.io.ByteArrayDataOutput;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +20,7 @@ public interface Packet<T> {
 
     public int getPacketId();
 
-    public byte[] getBytes();
+    public void write(ByteArrayDataOutput out);
 
     public T getData();
 }
