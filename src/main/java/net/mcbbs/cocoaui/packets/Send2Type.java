@@ -15,15 +15,17 @@ import java.util.function.Consumer;
  */
 public enum Send2Type {
     Bukkit, Forge, Sponge, Android;
-    private Consumer<Packet> SendFunction = (p) -> {
+    @SuppressWarnings("rawtypes")
+	private Consumer<Packet> SendFunction = (p) -> {
         throw new UnsupportedOperationException();
     };
 
-    public Consumer<Packet> getSendFunction() {
+    @SuppressWarnings("rawtypes")
+	public Consumer<Packet> getSendFunction() {
         return SendFunction;
     }
 
-    public void setSendFunction(Consumer<Packet> SendFunction) {
+    public void setSendFunction(@SuppressWarnings("rawtypes") Consumer<Packet> SendFunction) {
         this.SendFunction = SendFunction;
     }
 

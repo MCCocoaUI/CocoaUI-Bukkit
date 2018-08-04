@@ -2,6 +2,7 @@ package net.mcbbs.cocoaui.pluginmessage;
 
 import org.bukkit.entity.Player;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
@@ -43,9 +44,10 @@ public abstract class AbstractInPackage {
     protected JSONObject readJson() {
         if (!"Json".equalsIgnoreCase(in.readUTF())) {
             return null;
-        }
+        }     
         String json = in.readUTF();
-        return null;
+        JSONObject jsonobj = (JSONObject) JSONValue.parse(json);
+        return jsonobj;
     }
 
 }
