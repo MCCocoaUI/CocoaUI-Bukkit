@@ -25,12 +25,12 @@ public class PluginMessageManager {
 	}
 	public void receiveData(byte[] data, Player p) {
 		ByteArrayDataInput in = ByteStreams.newDataInput(data);
-		int i = in.readInt();
-		AbstractInPackage pack = this.getInstance(i, p, data);
+		int i = in.readInt();	//判断数据类型
+		AbstractInPackage pack = this.getInstance(i, p, data);		//根据数据类型获取数据包的实例
 		if (pack == null) {
 			return;
 		}
-		this.dealInPackage(pack);
+		this.dealInPackage(pack);//放入事件系统处理。
 	}
 
 	public void sendPackage(AbstractOutPackage out, Player p) {

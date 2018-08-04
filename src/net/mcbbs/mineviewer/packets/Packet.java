@@ -7,8 +7,6 @@
 package net.mcbbs.mineviewer.packets;
 
 import com.google.common.io.ByteArrayDataOutput;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  *
