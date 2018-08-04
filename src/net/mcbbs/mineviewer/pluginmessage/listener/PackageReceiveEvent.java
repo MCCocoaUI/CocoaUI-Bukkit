@@ -21,7 +21,7 @@ public class PackageReceiveEvent {
 		this.isCancelled = arg;
 	}
 
-	public boolean isCancelled(boolean arg) {
+	public boolean isCancelled() {
 		return this.isCancelled;
 	}
 

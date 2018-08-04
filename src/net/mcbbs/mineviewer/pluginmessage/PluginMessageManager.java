@@ -11,8 +11,10 @@ import com.google.common.collect.Sets;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 
+import net.mcbbs.mineviewer.MineViewer;
 import net.mcbbs.mineviewer.pluginmessage.listener.PackageListener;
 import net.mcbbs.mineviewer.pluginmessage.listener.PackageReceiveEvent;
+import net.mcbbs.mineviewer.pluginmessage.listener.PackageSendEvent;
 
 public class PluginMessageManager {
 	private Map<Integer, Class<? extends AbstractInPackage>> classes = Maps.newHashMap();
@@ -26,7 +28,17 @@ public class PluginMessageManager {
 			return;
 		}
 		this.dealInPackage(pack);
+	}
 
+	public void sendPackage(AbstractOutPackage out, Player p) {
+		PackageSendEvent e = new PackageSendEvent(out, p);
+		for (PackageListener listener : this.listeners) {
+			listener.onPackageSend(e);
+		}
+		if (e.isCancelled()) {
+			return;
+		}
+		p.sendPluginMessage(MineViewer.getPlugin(MineViewer.class), "MineViewer", out.getBytes());
 	}
 
 	public void registerListener(PackageListener listener) {
@@ -59,8 +71,8 @@ public class PluginMessageManager {
 	}
 
 	public void dealInPackage(AbstractInPackage pack) {
-		PackageReceiveEvent e  = new PackageReceiveEvent(pack);
-		for(PackageListener p:this.listeners) {
+		PackageReceiveEvent e = new PackageReceiveEvent(pack);
+		for (PackageListener p : this.listeners) {
 			p.onPackageReceive(e);
 		}
 	}
