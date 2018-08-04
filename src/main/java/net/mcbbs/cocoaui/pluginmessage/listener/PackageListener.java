@@ -1,4 +1,4 @@
-package net.mcbbs.mineviewer.pluginmessage.listener;
+package net.mcbbs.cocoaui.pluginmessage.listener;
 
 public abstract class PackageListener implements Comparable<PackageListener> {
 	public abstract void onPackageReceive(PackageReceiveEvent e);

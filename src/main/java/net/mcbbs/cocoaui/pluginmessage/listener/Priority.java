@@ -1,4 +1,4 @@
-package net.mcbbs.mineviewer.pluginmessage.listener;
+package net.mcbbs.cocoaui.pluginmessage.listener;
 
 public enum Priority {
 	LOW(1), MIDDLE(2), HIGH(3);

@@ -1,6 +1,6 @@
-package net.mcbbs.mineviewer.pluginmessage.packages;
+package net.mcbbs.cocoaui.pluginmessage.packages;
 
-import net.mcbbs.mineviewer.pluginmessage.AbstractInPackage;
+import net.mcbbs.cocoaui.pluginmessage.AbstractInPackage;
 import org.bukkit.entity.Player;
 
 public class InputPackageDemo extends AbstractInPackage {

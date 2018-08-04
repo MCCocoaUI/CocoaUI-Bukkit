@@ -1,8 +1,8 @@
-package net.mcbbs.mineviewer.pluginmessage.listener;
+package net.mcbbs.cocoaui.pluginmessage.listener;
 
 import org.bukkit.entity.Player;
 
-import net.mcbbs.mineviewer.pluginmessage.AbstractOutPackage;
+import net.mcbbs.cocoaui.pluginmessage.AbstractOutPackage;
 
 public class PackageSendEvent {
 	boolean isCancelled;

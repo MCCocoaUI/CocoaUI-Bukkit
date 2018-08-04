@@ -1,8 +1,8 @@
-package net.mcbbs.mineviewer.pluginmessage.listener;
+package net.mcbbs.cocoaui.pluginmessage.listener;
 
 import org.bukkit.entity.Player;
 
-import net.mcbbs.mineviewer.pluginmessage.AbstractInPackage;
+import net.mcbbs.cocoaui.pluginmessage.AbstractInPackage;
 
 public class PackageReceiveEvent {
 

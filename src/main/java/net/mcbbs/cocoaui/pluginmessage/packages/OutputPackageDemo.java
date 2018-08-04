@@ -1,6 +1,6 @@
-package net.mcbbs.mineviewer.pluginmessage.packages;
+package net.mcbbs.cocoaui.pluginmessage.packages;
 
-import net.mcbbs.mineviewer.pluginmessage.AbstractOutPackage;
+import net.mcbbs.cocoaui.pluginmessage.AbstractOutPackage;
 
 public class OutputPackageDemo extends AbstractOutPackage {
 	private static int ID = 1;

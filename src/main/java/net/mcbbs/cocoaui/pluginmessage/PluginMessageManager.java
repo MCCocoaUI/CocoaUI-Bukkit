@@ -1,12 +1,13 @@
-package net.mcbbs.mineviewer.pluginmessage;
+package net.mcbbs.cocoaui.pluginmessage;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.TreeSet;
 
-import net.mcbbs.mineviewer.pluginmessage.listener.PackageListener;
-import net.mcbbs.mineviewer.pluginmessage.listener.PackageReceiveEvent;
-import net.mcbbs.mineviewer.pluginmessage.listener.PackageSendEvent;
+import net.mcbbs.cocoaui.CocoaUI;
+import net.mcbbs.cocoaui.pluginmessage.listener.PackageListener;
+import net.mcbbs.cocoaui.pluginmessage.listener.PackageReceiveEvent;
+import net.mcbbs.cocoaui.pluginmessage.listener.PackageSendEvent;
 import org.bukkit.entity.Player;
 
 import com.google.common.collect.Maps;
@@ -14,8 +15,7 @@ import com.google.common.collect.Sets;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 
-import net.mcbbs.mineviewer.MineViewer;
-import net.mcbbs.mineviewer.pluginmessage.packages.InputPackageDemo;
+import net.mcbbs.cocoaui.pluginmessage.packages.InputPackageDemo;
 
 public class PluginMessageManager {
 	private Map<Integer, Class<? extends AbstractInPackage>> classes = Maps.newHashMap();
@@ -41,7 +41,7 @@ public class PluginMessageManager {
 		if (e.isCancelled()) {
 			return;
 		}
-		p.sendPluginMessage(MineViewer.getPlugin(MineViewer.class), "MineViewer", out.getBytes());
+		p.sendPluginMessage(CocoaUI.getPlugin(CocoaUI.class), "CocoaUI", out.getBytes());
 	}
 
 	public void registerListener(PackageListener listener) {

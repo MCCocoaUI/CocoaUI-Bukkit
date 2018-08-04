@@ -1,4 +1,4 @@
-package net.mcbbs.mineviewer.utils.config;
+package net.mcbbs.cocoaui.utils.config;
 
 import java.io.File;
 import java.io.FileInputStream;

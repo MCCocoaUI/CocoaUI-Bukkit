@@ -4,7 +4,7 @@
  * 保留一切所有权
  * 若为Bukkit插件 请前往plugin.yml查看剩余协议
  */
-package net.mcbbs.mineviewer.packets;
+package net.mcbbs.cocoaui.packets;
 
 import java.util.function.Consumer;
 

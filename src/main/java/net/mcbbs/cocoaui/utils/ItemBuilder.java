@@ -1,4 +1,4 @@
-package net.mcbbs.mineviewer.utils;
+package net.mcbbs.cocoaui.utils;
 
 import java.util.List;
 

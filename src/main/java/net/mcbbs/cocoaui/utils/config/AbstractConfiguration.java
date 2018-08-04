@@ -1,4 +1,4 @@
-package net.mcbbs.mineviewer.utils.config;
+package net.mcbbs.cocoaui.utils.config;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,18 +10,18 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
+
+import net.mcbbs.cocoaui.CocoaUI;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Maps;
 
-import net.mcbbs.mineviewer.MineViewer;
-
 /**
  * @author ChenJi158
  */
 public abstract class AbstractConfiguration {
-	private static File DataFile = MineViewer.getKDataFolder();
+	private static File DataFile = CocoaUI.getKDataFolder();
 	private String ConfigName;
 	private FileConfiguration config = new KConfiguration();
 	private File configfile;
@@ -58,7 +58,7 @@ public abstract class AbstractConfiguration {
 				if (rewrite) {
 					saveDefaultConfig();
 				}
-				MineViewer.getLog().info(create);
+				CocoaUI.getLog().info(create);
 			} catch (IOException e) {
 				throw new ConfigException(e, cannotCreate);
 			}
@@ -76,7 +76,7 @@ public abstract class AbstractConfiguration {
 			}
 
 		} catch (InvalidConfigurationException e) {
-			MineViewer.getLog().warning("错误，无法读取" + ConfigName + ".yml 请注意格式。已经重新生成。");
+			CocoaUI.getLog().warning("错误，无法读取" + ConfigName + ".yml 请注意格式。已经重新生成。");
 			this.configfile.renameTo(new File(DataFile + "/" + ConfigName + ".break"));
 			if (rewrite) {
 				saveDefaultConfig();

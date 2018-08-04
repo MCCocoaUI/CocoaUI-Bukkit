@@ -1,4 +1,4 @@
-package net.mcbbs.mineviewer.pluginmessage;
+package net.mcbbs.cocoaui.pluginmessage;
 
 import org.bukkit.entity.Player;
 import org.json.simple.JSONObject;
