@@ -7,44 +7,45 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 
 public abstract class AbstractInPackage {
-	private ByteArrayDataInput in;
-	protected byte[] orgianData;
-	protected Player sender;
-	protected int id;
 
-	public AbstractInPackage(byte[] data, Player sender, int id) {
-		this.orgianData = data;
-		this.sender = sender;
-		this.id = id;
-		in = ByteStreams.newDataInput(data);
-	}
+    private ByteArrayDataInput in;
+    protected byte[] orgianData;
+    protected Player sender;
+    protected int id;
 
-	protected ByteArrayDataInput getByteArrayDataInput() {
-		return this.in;
-	}
+    public AbstractInPackage(byte[] data, Player sender, int id) {
+        this.orgianData = data;
+        this.sender = sender;
+        this.id = id;
+        in = ByteStreams.newDataInput(data);
+    }
 
-	public final byte[] getOrginanData() {
-		return this.orgianData;
-	}
+    protected ByteArrayDataInput getByteArrayDataInput() {
+        return this.in;
+    }
 
-	public final Player getPlayer() {
-		return this.sender;
-	}
+    public final byte[] getOrginanData() {
+        return this.orgianData;
+    }
 
-	public final int getID() {
-		return this.id;
-	}
+    public final Player getPlayer() {
+        return this.sender;
+    }
 
-	public final PackageType getType() {
-		return PackageType.IN;
-	}
+    public final int getID() {
+        return this.id;
+    }
 
-	protected JSONObject readJson() {
-		if (!"Json".equalsIgnoreCase(in.readUTF())) {
-			return null;
-		}
-		String json = in.readUTF();
-		return null;
-	}
+    public final PackageType getType() {
+        return PackageType.IN;
+    }
+
+    protected JSONObject readJson() {
+        if (!"Json".equalsIgnoreCase(in.readUTF())) {
+            return null;
+        }
+        String json = in.readUTF();
+        return null;
+    }
 
 }

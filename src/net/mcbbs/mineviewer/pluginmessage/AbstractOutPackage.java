@@ -6,37 +6,38 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
 public abstract class AbstractOutPackage {
-	private int id;
-	private ByteArrayDataOutput out;
 
-	public AbstractOutPackage(int id) {
-		out = ByteStreams.newDataOutput();
-		this.dealId();
-	}
+    private int id;
+    private ByteArrayDataOutput out;
 
-	protected ByteArrayDataOutput getByteArrayDataOutput() {
-		return out;
-	}
+    public AbstractOutPackage(int id) {
+        out = ByteStreams.newDataOutput();
+        this.dealId();
+    }
 
-	public final PackageType getType() {
-		return PackageType.OUT;
-	}
+    protected ByteArrayDataOutput getByteArrayDataOutput() {
+        return out;
+    }
 
-	private void dealId() {
-		out.writeInt(id);
-	}
+    public final PackageType getType() {
+        return PackageType.OUT;
+    }
 
-	public final int getID() {
-		return id;
-	}
+    private void dealId() {
+        out.writeInt(id);
+    }
 
-	protected byte[] getBytes() {
-		return out.toByteArray();
-	}
-	protected final void writeJson(JSONObject json) {
-		this.out.writeUTF("Json");
-		this.out.writeUTF(json.toJSONString());
-	}
-	
+    public final int getID() {
+        return id;
+    }
+
+    protected byte[] getBytes() {
+        return out.toByteArray();
+    }
+
+    protected final void writeJson(JSONObject json) {
+        this.out.writeUTF("Json");
+        this.out.writeUTF(json.toJSONString());
+    }
 
 }
