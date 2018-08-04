@@ -1,5 +1,7 @@
 package net.mcbbs.mineviewer.pluginmessage;
 
+import org.json.simple.JSONObject;
+
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
@@ -31,7 +33,10 @@ public abstract class AbstractOutPackage {
 	protected byte[] getBytes() {
 		return out.toByteArray();
 	}
-
+	protected final void writeJson(JSONObject json) {
+		this.out.writeUTF("Json");
+		this.out.writeUTF(json.toJSONString());
+	}
 	
 
 }

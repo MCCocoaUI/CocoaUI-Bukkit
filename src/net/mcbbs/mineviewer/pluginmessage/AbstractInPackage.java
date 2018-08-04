@@ -1,6 +1,7 @@
 package net.mcbbs.mineviewer.pluginmessage;
 
 import org.bukkit.entity.Player;
+import org.json.simple.JSONObject;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
@@ -37,4 +38,13 @@ public abstract class AbstractInPackage {
 	public final PackageType getType() {
 		return PackageType.IN;
 	}
+
+	protected JSONObject readJson() {
+		if (!"Json".equalsIgnoreCase(in.readUTF())) {
+			return null;
+		}
+		String json = in.readUTF();
+		return null;
+	}
+
 }
