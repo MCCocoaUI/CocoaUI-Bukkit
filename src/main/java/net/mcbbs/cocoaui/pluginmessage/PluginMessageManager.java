@@ -15,6 +15,7 @@ import com.google.common.collect.Sets;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 
+import net.mcbbs.cocoaui.pluginmessage.packages.InJsonPackageDemo;
 import net.mcbbs.cocoaui.pluginmessage.packages.InputPackageDemo;
 
 public class PluginMessageManager {
@@ -82,6 +83,7 @@ public class PluginMessageManager {
 	
 	private void init() {
 		this.registerPackage(1, InputPackageDemo.class);
+		this.registerPackage(2, InJsonPackageDemo.class);
 	}
 
 }
