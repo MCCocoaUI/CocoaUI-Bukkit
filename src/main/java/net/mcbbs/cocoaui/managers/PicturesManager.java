@@ -9,6 +9,7 @@ import java.util.Set;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
+import net.mcbbs.cocoaui.managers.picturemanager.Picture;
 import net.mcbbs.cocoaui.utils.config.AbstractConfiguration;
 import net.mcbbs.cocoaui.utils.config.ConfigException;
 

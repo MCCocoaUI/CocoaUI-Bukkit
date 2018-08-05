@@ -15,7 +15,7 @@ import java.util.Map;
  * <p>
  * Used to manage SubCommands
  *
- * @author Zoyn
+ * @author Vlvxingze
  * @since 2018-08-05
  */
 public class CommandHandler implements CommandExecutor {
@@ -23,7 +23,7 @@ public class CommandHandler implements CommandExecutor {
     /**
      * 对应关系: 子命令名 -> 子命令实现类
      */
-    private static Map<String, SubCommand> commandMap = Maps.newHashMap();
+    private Map<String, SubCommand> commandMap = Maps.newHashMap();
 
     /**
      * 初始化所有子命令
@@ -58,13 +58,12 @@ public class CommandHandler implements CommandExecutor {
             return true;
         }
         if (!commandMap.containsKey(args[0])) {
-            sender.sendMessage("§c未知的命令!");
+            sender.sendMessage("[CocoaUI]§c未知的命令!");
             return true;
         }
 
-        // args[0]
-        SubCommand subCommand = commandMap.get(args[0]);
-        subCommand.execute(sender, args);
+        commandMap.get(args[0]).execute(sender, args);;
+    
         return true;
     }
 }
