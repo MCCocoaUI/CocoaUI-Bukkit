@@ -18,8 +18,8 @@ public class CocoaUI extends JavaPlugin {
 	}
 
 	private void registerListeners() {
-		super.getServer().getMessenger().registerIncomingPluginChannel(this, "net/mcbbs/cocoaui", new Listener());
-		super.getServer().getMessenger().registerOutgoingPluginChannel(this, "net/mcbbs/cocoaui");
+		super.getServer().getMessenger().registerIncomingPluginChannel(this, "cocoaui", new Listener());
+		super.getServer().getMessenger().registerOutgoingPluginChannel(this, "cocoaui");
 	}
 
 	private void initStatic() {
