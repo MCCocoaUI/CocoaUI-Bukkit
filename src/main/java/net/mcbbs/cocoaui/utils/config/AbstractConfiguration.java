@@ -32,14 +32,12 @@ public abstract class AbstractConfiguration {
 
 	/**
 	 * 
-	 * @param ConfigName
-	 *            配置文件的名称
-	 * @param rewrite
-	 *            如果文件不存在或读取失败，是否复写。
-	 * @throws ConfigException
-	 *             当创建失败时抛出。
+	 * @param ConfigName 配置文件的名称
+	 * @param rewrite    如果文件不存在或读取失败，是否复写。
+	 * @throws ConfigException 当创建失败时抛出。
 	 */
-	public AbstractConfiguration(String ConfigName, boolean rewrite, String create, String cannotCreate) throws ConfigException {
+	public AbstractConfiguration(String ConfigName, boolean rewrite, String create, String cannotCreate)
+			throws ConfigException {
 		this.ConfigName = ConfigName;
 		this.configfile = new File(DataFile + "/" + ConfigName);
 
@@ -47,13 +45,13 @@ public abstract class AbstractConfiguration {
 			AbstractConfiguration.DataFile.mkdirs();
 			Maps.newConcurrentMap();
 		}
-		
+
 		if (!(this.configfile.exists())) {
-			File file = this.configfile.getParentFile()
-			;if(file!=null&&!file.exists()){
+			File file = this.configfile.getParentFile();
+			if (file != null && !file.exists()) {
 				file.mkdirs();
 			}
-					try {
+			try {
 				this.configfile.createNewFile();
 				if (rewrite) {
 					saveDefaultConfig();
@@ -149,9 +147,9 @@ public abstract class AbstractConfiguration {
 			i = connection.getInputStream();
 			InputStreamReader isr = new InputStreamReader(i, Charsets.UTF_8);
 			saveFile(this.configfile, isr);
-		
-				this.saveConfig();
-	
+
+			this.saveConfig();
+
 		} catch (IOException ex) {
 			throw new ConfigException(ex, "无法保存默认的配置文件：" + ConfigName);
 		} finally {
