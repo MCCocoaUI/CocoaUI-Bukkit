@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.logging.Logger;
 
 import net.mcbbs.cocoaui.command.CommandHandler;
+import net.mcbbs.cocoaui.managers.picturemanager.PicturesManager;
 import net.mcbbs.cocoaui.pluginmessage.Listener;
 import net.mcbbs.cocoaui.pluginmessage.PluginMessageManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,6 +14,7 @@ public class CocoaUI extends JavaPlugin {
 	private static Logger log;
 	private static PluginMessageManager pmm;
 	private static CommandHandler ch;
+	private static PicturesManager pm;
 
 	public void onEnable() {
 		this.initStatic();
@@ -31,6 +33,7 @@ public class CocoaUI extends JavaPlugin {
 		CocoaUI.log = super.getLogger();
 		CocoaUI.pmm = new PluginMessageManager();
 		CocoaUI.ch = new CommandHandler();
+		CocoaUI.pm = new PicturesManager();
 	}
 
 	public static File getKDataFolder() {
@@ -47,6 +50,10 @@ public class CocoaUI extends JavaPlugin {
 
 	public static CommandHandler getCommandHandler() {
 		return CocoaUI.ch;
+	}
+
+	public static PicturesManager getPicturesManager() {
+		return CocoaUI.pm;
 	}
 
 }

@@ -1,7 +1,13 @@
 package net.mcbbs.cocoaui.managers.picturemanager;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
@@ -15,6 +21,7 @@ public class Picture implements ConfigurationSerializable, Cloneable {
 	private static String LOCK = "lock";
 	private static String HEIGHT = "height";
 	private static String WIDTH = "width";
+	private static String DEFAULTURL = "DEFAULTURL";
 	private String name;
 	private String url;
 	private String description;
@@ -22,6 +29,7 @@ public class Picture implements ConfigurationSerializable, Cloneable {
 	private boolean lock;
 	private int height;
 	private int width;
+	private String defaultURL;
 
 	public Picture(Map<String, Object> obj) {
 		this.name = (String) obj.get(NAME);
@@ -31,21 +39,29 @@ public class Picture implements ConfigurationSerializable, Cloneable {
 		this.lock = (boolean) obj.get(LOCK);
 		this.height = (int) obj.get(HEIGHT);
 		this.width = (int) obj.get(WIDTH);
+		this.defaultURL = (String) obj.get(DEFAULTURL);
 	}
 
-	public Picture(String name, String url) {
-		this(name, url, "default", "nowrite");
+	public Picture(String name, String defaultURL) {
+		this(name, defaultURL, "default", "nowrite");
 	}
 
-	public Picture(String name, String url, String type) {
-		this(name, url, type, "nowrite");
+	public Picture(String name, String defaultURL, String type) {
+		this(name, defaultURL, type, "nowrite");
 	}
 
-	public Picture(String name, String url, String type, String description) {
+	public Picture(String name, String defaultURL, String type, String description) {
+		this(name, defaultURL, type, description, true);
+	}
+
+	public Picture(String name, String defaultURL, String type, String description, boolean lock) {
 		this.name = name;
-		this.url = url;
+		this.defaultURL = defaultURL;
+		this.url = this.defaultURL;
 		this.type = type;
 		this.description = description;
+		this.lock = lock;
+		this.loadSize();
 	}
 
 	public String getName() {
@@ -118,4 +134,20 @@ public class Picture implements ConfigurationSerializable, Cloneable {
 		return width;
 	}
 
+	public String getDefaultURL() {
+		return this.defaultURL;
+	}
+
+	private void loadSize() {
+		BufferedImage img;
+		try {
+			img = ImageIO.read(new URI(this.getUrl()).toURL().openStream());
+			this.width = img.getWidth();
+			this.height = img.getHeight();
+
+		} catch (IOException | URISyntaxException e) {
+			e.printStackTrace();
+		}
+
+	}
 }

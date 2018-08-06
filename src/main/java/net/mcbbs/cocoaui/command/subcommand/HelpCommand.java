@@ -18,7 +18,6 @@ public class HelpCommand implements SubCommand {
 		mainPage.setClear(true);
 		mainPage.addLine(new HelpLine("§c这里是CocoaUI的管理界面"));
 		mainPage.addLine(new HelpLine("  §c✎ §a进入图片管理器", "/CocoaUI picmanager", "§c上传|修改|查看\n\n§c>>> §a点击查看"));
-		
     }
 
 	public static void main(String[] args) {

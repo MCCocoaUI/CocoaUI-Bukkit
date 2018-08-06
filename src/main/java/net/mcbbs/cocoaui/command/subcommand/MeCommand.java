@@ -1,5 +1,6 @@
 package net.mcbbs.cocoaui.command.subcommand;
 
+import net.mcbbs.cocoaui.CocoaUI;
 import net.mcbbs.cocoaui.command.SubCommand;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -12,6 +13,12 @@ public class MeCommand implements SubCommand {
             sender.sendMessage("You must be a player!");
             return;
         }
-        Player player = (Player) sender;
+        String head = args[1];
+        if(head.equalsIgnoreCase("create")) {
+        	if(args.length==3) {
+        			CocoaUI.getPicturesManager().registerPlugin(args[2]);
+        	}
+        }
+        
     }
 }
