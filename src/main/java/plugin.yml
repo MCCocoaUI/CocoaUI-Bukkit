@@ -1,7 +1,0 @@
-name: CocoaUI
-main: net.mcbbs.cocoaui.CocoaUI
-version: 1.0
-
-commands:
-  cocoaui:
-  cui:
