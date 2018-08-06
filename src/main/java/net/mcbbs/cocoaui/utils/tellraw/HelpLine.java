@@ -1,4 +1,4 @@
-﻿package net.mcbbs.cocoaui.utils.tellraw;
+package net.mcbbs.cocoaui.utils.tellraw;
 
 import org.bukkit.entity.Player;
 

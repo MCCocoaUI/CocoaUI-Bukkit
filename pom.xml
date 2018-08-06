@@ -15,6 +15,10 @@
 			<name>Zoyn</name>
 			<url>http://zoyn.cc/</url>
 		</developer>
+		<developer>
+            <name>Soldier</name>
+            <url>http://www.zhanshi123.me</url>
+        </developer>
 	</developers>
 
 	<properties>
@@ -41,7 +45,7 @@
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot</artifactId>
-			<version>1.12-R0.1-SNAPSHOT</version>
+			<version>1.12.2-R0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
