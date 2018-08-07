@@ -19,6 +19,7 @@ public abstract class AbstractInPackage {
         this.sender = sender;
         this.id = id;
         in = ByteStreams.newDataInput(data);
+        in.readInt();
     }
 
     protected ByteArrayDataInput getByteArrayDataInput() {

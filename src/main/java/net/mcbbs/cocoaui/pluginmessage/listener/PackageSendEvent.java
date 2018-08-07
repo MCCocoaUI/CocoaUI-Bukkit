@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 import net.mcbbs.cocoaui.pluginmessage.AbstractOutPackage;
 
 public class PackageSendEvent {
-	boolean isCancelled;
+	boolean isCancelled = false;
 	AbstractOutPackage pack;
 	Player p;
 	int id;
@@ -17,6 +17,7 @@ public class PackageSendEvent {
 
 	public PackageSendEvent(AbstractOutPackage out, Player p) {
 		this.p = p;
+		this.pack = out;
 	}
 
 	public void setCancelled(boolean arg) {

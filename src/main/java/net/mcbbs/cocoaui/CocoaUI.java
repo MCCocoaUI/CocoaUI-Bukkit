@@ -4,9 +4,15 @@ import java.io.File;
 import java.util.logging.Logger;
 
 import net.mcbbs.cocoaui.command.CommandHandler;
+import net.mcbbs.cocoaui.listeners.PlayerListener;
+import net.mcbbs.cocoaui.listeners.PluginMessageListener;
+import net.mcbbs.cocoaui.managers.VerifyManager;
+import net.mcbbs.cocoaui.managers.picturemanager.Picture;
 import net.mcbbs.cocoaui.managers.picturemanager.PicturesManager;
 import net.mcbbs.cocoaui.pluginmessage.Listener;
 import net.mcbbs.cocoaui.pluginmessage.PluginMessageManager;
+
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CocoaUI extends JavaPlugin {
@@ -15,17 +21,26 @@ public class CocoaUI extends JavaPlugin {
 	private static PluginMessageManager pmm;
 	private static CommandHandler ch;
 	private static PicturesManager pm;
+	private static VerifyManager vm;
 
 	public void onEnable() {
+		ConfigurationSerialization.registerClass(Picture.class);
 		this.initStatic();
 		this.registerListeners();
 	}
 
+	public void onDisable() {
+		pm.save();
+	}
+
 	private void registerListeners() {
-		super.getServer().getMessenger().registerIncomingPluginChannel(this, "cocoaui", new Listener());
-		super.getServer().getMessenger().registerOutgoingPluginChannel(this, "cocoaui");
+		super.getServer().getMessenger().registerIncomingPluginChannel(this, "CocoaUI", new Listener());
+		super.getServer().getMessenger().registerOutgoingPluginChannel(this, "CocoaUI");
 		super.getCommand("CocoaUI").setExecutor(ch);
 		super.getCommand("cui").setExecutor(ch);
+		new PluginMessageListener();
+		super.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+
 	}
 
 	private void initStatic() {
@@ -34,6 +49,7 @@ public class CocoaUI extends JavaPlugin {
 		CocoaUI.pmm = new PluginMessageManager();
 		CocoaUI.ch = new CommandHandler();
 		CocoaUI.pm = new PicturesManager();
+		CocoaUI.vm = new VerifyManager();
 	}
 
 	public static File getKDataFolder() {
@@ -54,6 +70,10 @@ public class CocoaUI extends JavaPlugin {
 
 	public static PicturesManager getPicturesManager() {
 		return CocoaUI.pm;
+	}
+
+	public static VerifyManager getVerfiyManager() {
+		return  CocoaUI. vm;
 	}
 
 }

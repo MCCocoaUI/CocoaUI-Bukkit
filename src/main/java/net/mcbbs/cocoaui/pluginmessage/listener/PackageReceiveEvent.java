@@ -1,7 +1,6 @@
 package net.mcbbs.cocoaui.pluginmessage.listener;
 
 import org.bukkit.entity.Player;
-
 import net.mcbbs.cocoaui.pluginmessage.AbstractInPackage;
 
 public class PackageReceiveEvent {
@@ -21,7 +20,7 @@ public class PackageReceiveEvent {
 		this.isCancelled = arg;
 	}
 
-	public boolean isCancelled() {
+	public boolean isCancelled()	{
 		return this.isCancelled;
 	}
 

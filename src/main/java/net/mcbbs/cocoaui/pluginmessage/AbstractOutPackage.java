@@ -10,6 +10,7 @@ public abstract class AbstractOutPackage {
 
 	public AbstractOutPackage(int id) {
 		out = ByteStreams.newDataOutput();
+		this.id = id;
 		this.dealId();
 	}
 

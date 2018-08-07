@@ -8,6 +8,8 @@ import net.mcbbs.cocoaui.CocoaUI;
 import net.mcbbs.cocoaui.pluginmessage.listener.PackageListener;
 import net.mcbbs.cocoaui.pluginmessage.listener.PackageReceiveEvent;
 import net.mcbbs.cocoaui.pluginmessage.listener.PackageSendEvent;
+
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.google.common.collect.Maps;
@@ -15,23 +17,25 @@ import com.google.common.collect.Sets;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 
-import net.mcbbs.cocoaui.pluginmessage.packages.InJsonPackageDemo;
-import net.mcbbs.cocoaui.pluginmessage.packages.InputPackageDemo;
+import net.mcbbs.cocoaui.pluginmessage.packages.InVerifyPackage;
+import net.mcbbs.cocoaui.pluginmessage.packages.OutSinglePictureUpdate;
 
 public class PluginMessageManager {
 	private Map<Integer, Class<? extends AbstractInPackage>> classes = Maps.newHashMap();
 	private TreeSet<PackageListener> listeners = Sets.newTreeSet();
+
 	public PluginMessageManager() {
 		this.init();
 	}
+
 	public void receiveData(byte[] data, Player p) {
 		ByteArrayDataInput in = ByteStreams.newDataInput(data);
-		int i = in.readInt();	//判断数据类型
-		AbstractInPackage pack = this.getInstance(i, p, data);		//根据数据类型获取数据包的实例
+		int i = in.readInt(); // 判断数据类型
+		AbstractInPackage pack = this.getInstance(i, p, data); // 根据数据类型获取数据包的实例
 		if (pack == null) {
 			return;
 		}
-		this.dealInPackage(pack);//放入事件系统处理。
+		this.dealInPackage(pack);// 放入事件系统处理。
 	}
 
 	public void sendPackage(AbstractOutPackage out, Player p) {
@@ -66,7 +70,7 @@ public class PluginMessageManager {
 			return null;
 		}
 		try {
-			return (AbstractInPackage) this.classes.get(i).getConstructors()[0].newInstance(data, p, i);
+			return (AbstractInPackage) this.classes.get(i).getConstructors()[0].newInstance(data, p);
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| SecurityException e) {
 			e.printStackTrace();
@@ -80,10 +84,15 @@ public class PluginMessageManager {
 			p.onPackageReceive(e);
 		}
 	}
-	
+
 	private void init() {
-		this.registerPackage(1, InputPackageDemo.class);
-		this.registerPackage(2, InJsonPackageDemo.class);
+		this.registerPackage(1, InVerifyPackage.class);
+	}
+
+	public void sendAll(AbstractOutPackage pack) {
+		for (Player p : Bukkit.getOnlinePlayers()) {
+			this.sendPackage(pack, p);
+		}
 	}
 
 }

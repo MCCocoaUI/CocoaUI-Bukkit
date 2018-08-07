@@ -2,6 +2,7 @@ package net.mcbbs.cocoaui.managers.picturemanager;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -13,15 +14,18 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 import com.google.common.collect.Maps;
 
+import net.mcbbs.cocoaui.utils.MD5Tool;
+
 public class Picture implements ConfigurationSerializable, Cloneable {
-	private static String NAME = "name";
-	private static String URL = "url";
-	private static String DESCRIPTION = "description";
-	private static String TYPE = "type";
-	private static String LOCK = "lock";
-	private static String HEIGHT = "height";
-	private static String WIDTH = "width";
-	private static String DEFAULTURL = "DEFAULTURL";
+	private static final String NAME = "name";
+	private static final String URL = "url";
+	private static final String DESCRIPTION = "description";
+	private static final String TYPE = "type";
+	private static final String LOCK = "lock";
+	private static final String HEIGHT = "height";
+	private static final String WIDTH = "width";
+	private static final String DEFAULTURL = "DEFAULTURL";
+	private static final String MD5 = "md5";
 	private String name;
 	private String url;
 	private String description;
@@ -30,6 +34,8 @@ public class Picture implements ConfigurationSerializable, Cloneable {
 	private int height;
 	private int width;
 	private String defaultURL;
+	private String md5;
+	private boolean updated;
 
 	public Picture(Map<String, Object> obj) {
 		this.name = (String) obj.get(NAME);
@@ -40,6 +46,11 @@ public class Picture implements ConfigurationSerializable, Cloneable {
 		this.height = (int) obj.get(HEIGHT);
 		this.width = (int) obj.get(WIDTH);
 		this.defaultURL = (String) obj.get(DEFAULTURL);
+		this.md5 = (String) obj.get(MD5);
+	}
+
+	public String getMD5() {
+		return this.md5;
 	}
 
 	public Picture(String name, String defaultURL) {
@@ -62,6 +73,7 @@ public class Picture implements ConfigurationSerializable, Cloneable {
 		this.description = description;
 		this.lock = lock;
 		this.loadSize();
+		this.loadMD5();
 	}
 
 	public String getName() {
@@ -78,6 +90,9 @@ public class Picture implements ConfigurationSerializable, Cloneable {
 
 	public void setUrl(String url) {
 		this.url = url;
+		this.loadMD5();
+		this.loadSize();
+		this.updated = false;
 	}
 
 	public String getDescription() {
@@ -115,6 +130,7 @@ public class Picture implements ConfigurationSerializable, Cloneable {
 		map.put(Picture.LOCK, this.lock);
 		map.put(Picture.HEIGHT, this.height);
 		map.put(Picture.WIDTH, this.width);
+		map.put(Picture.MD5, this.md5);
 		return map;
 	}
 
@@ -138,6 +154,27 @@ public class Picture implements ConfigurationSerializable, Cloneable {
 		return this.defaultURL;
 	}
 
+	private void loadMD5() {
+		try (InputStream in = new URI(this.getUrl()).toURL().openStream()) {
+			byte[] b;
+			// 如果 图片 大于 10M即10485760字节，只分析前10M的MD5。
+			if (in.available() > 10485760) {
+				b = new byte[10485760];
+			} else {
+				b = new byte[in.available()];
+			}
+			in.read(b);
+			this.md5 = MD5Tool.md5(b);
+		} catch (IOException | URISyntaxException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void updated() {
+		this.updated = false;
+	}
+
 	private void loadSize() {
 		BufferedImage img;
 		try {
@@ -148,6 +185,10 @@ public class Picture implements ConfigurationSerializable, Cloneable {
 		} catch (IOException | URISyntaxException e) {
 			e.printStackTrace();
 		}
-
 	}
+
+	public String getPictureID(String pluginName) {
+		return pluginName + "." + this.name;
+	}
+
 }

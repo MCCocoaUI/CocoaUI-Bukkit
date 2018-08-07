@@ -8,13 +8,16 @@ import java.util.UUID;
 import org.bukkit.entity.Player;
 
 import com.google.common.collect.Maps;
-
 import net.mcbbs.cocoaui.CocoaUI;
 import net.mcbbs.cocoaui.utils.config.ConfigException;
 
 public class PicturesManager {
 	public Map<String, PluginPictureManager> picturemanagers = Maps.newHashMap();
 	public Map<UUID, PictureEditor> pictureeditors = Maps.newHashMap();
+
+	public PicturesManager() {
+		loadManagers();
+	}
 
 	public boolean setURL(Player p, String url) {
 		if (this.pictureeditors.containsKey(p.getUniqueId())) {
@@ -55,7 +58,7 @@ public class PicturesManager {
 	}
 
 	public void loadManagers() {
-		File f = new File(CocoaUI.getKDataFolder() + "/picconfig");
+		File f = new File(CocoaUI.getKDataFolder() + "/picconfig/");
 		for (File file : f.listFiles(new FileFilter() {
 			@Override
 			public boolean accept(File arg0) {
@@ -68,7 +71,7 @@ public class PicturesManager {
 
 	public void loadFromFile(File f) {
 		String name = f.getName();
-		name.substring(0, name.length() - 5);
+		this.loadManager(name.substring(0, name.length() - 4));
 
 	}
 
@@ -77,8 +80,14 @@ public class PicturesManager {
 			PluginPictureManager manager = new PluginPictureManager(name);
 			this.picturemanagers.put(name, manager);
 		} catch (ConfigException e) {
-
 			e.printStackTrace();
 		}
 	}
+
+	public void save() {
+		for (PluginPictureManager manager : this.picturemanagers.values()) {
+			manager.save();
+		}
+	}
+	
 }
