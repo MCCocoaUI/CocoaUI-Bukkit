@@ -14,6 +14,9 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 import com.google.common.collect.Maps;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
+
 import net.mcbbs.cocoaui.utils.MD5Tool;
 
 public class Picture implements ConfigurationSerializable, Cloneable {
@@ -35,7 +38,6 @@ public class Picture implements ConfigurationSerializable, Cloneable {
 	private int width;
 	private String defaultURL;
 	private String md5;
-	private boolean updated;
 
 	public Picture(Map<String, Object> obj) {
 		this.name = (String) obj.get(NAME);
@@ -47,6 +49,8 @@ public class Picture implements ConfigurationSerializable, Cloneable {
 		this.width = (int) obj.get(WIDTH);
 		this.defaultURL = (String) obj.get(DEFAULTURL);
 		this.md5 = (String) obj.get(MD5);
+		this.loadSize();
+		this.loadMD5();
 	}
 
 	public String getMD5() {
@@ -92,7 +96,6 @@ public class Picture implements ConfigurationSerializable, Cloneable {
 		this.url = url;
 		this.loadMD5();
 		this.loadSize();
-		this.updated = false;
 	}
 
 	public String getDescription() {
@@ -156,23 +159,18 @@ public class Picture implements ConfigurationSerializable, Cloneable {
 
 	private void loadMD5() {
 		try (InputStream in = new URI(this.getUrl()).toURL().openStream()) {
-			byte[] b;
-			// 如果 图片 大于 10M即10485760字节，只分析前10M的MD5。
-			if (in.available() > 10485760) {
-				b = new byte[10485760];
-			} else {
-				b = new byte[in.available()];
+			ByteArrayDataOutput out = ByteStreams.newDataOutput();
+			byte[] bs = new byte[16384];
+			int len;
+			while ((len = in.read(bs)) != -1) {
+				out.write(bs, 0, len);
 			}
-			in.read(b);
-			this.md5 = MD5Tool.md5(b);
+			byte[] bytes = out.toByteArray();
+			this.md5 = MD5Tool.md5(bytes);
 		} catch (IOException | URISyntaxException e) {
 			e.printStackTrace();
 		}
 
-	}
-
-	public void updated() {
-		this.updated = false;
 	}
 
 	private void loadSize() {
@@ -181,7 +179,6 @@ public class Picture implements ConfigurationSerializable, Cloneable {
 			img = ImageIO.read(new URI(this.getUrl()).toURL().openStream());
 			this.width = img.getWidth();
 			this.height = img.getHeight();
-
 		} catch (IOException | URISyntaxException e) {
 			e.printStackTrace();
 		}

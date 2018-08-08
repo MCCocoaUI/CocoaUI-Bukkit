@@ -14,7 +14,7 @@ import net.mcbbs.cocoaui.utils.config.ConfigException;
 
 public final class PluginPictureManager extends AbstractConfiguration {
 	private Map<String, Picture> pics = Maps.newHashMap();
-	private Map<String, PictureChenge> pcs = Maps.newHashMap();
+	private Map<String, PictureChange> pcs = Maps.newHashMap();
 	private String pluginName;
 
 	public PluginPictureManager(String pluginName) throws ConfigException {
@@ -33,7 +33,7 @@ public final class PluginPictureManager extends AbstractConfiguration {
 	public boolean setURL(String name, String url) {
 		if (this.pics.containsKey(name)) {
 			this.pics.get(name).setUrl(url);
-			this.pcs.put(name, new PictureChenge(PictureChenge.SETURL, name, null));
+			this.pcs.put(name, new PictureChange(PictureChange.SETURL, name, null));
 			return true;
 		}
 		return false;
@@ -42,7 +42,7 @@ public final class PluginPictureManager extends AbstractConfiguration {
 	public boolean removePicture(String name) {
 		if (this.pics.containsKey(name)) {
 			this.pics.remove(name);
-			this.pcs.put(name, new PictureChenge(PictureChenge.REMOVE, name, null));
+			this.pcs.put(name, new PictureChange(PictureChange.REMOVE, name, null));
 			return true;
 		}
 		return false;
@@ -69,6 +69,7 @@ public final class PluginPictureManager extends AbstractConfiguration {
 		map.put("name", p.getName());
 		map.put("url", p.getUrl());
 		map.put("md5", p.getMD5());
+		System.out.println(p.getMD5());
 		return map;
 	}
 
@@ -96,7 +97,7 @@ public final class PluginPictureManager extends AbstractConfiguration {
 	}
 
 	public OutSinglePictureUpdate getUpdatePackage(String name, Picture p) {
-		PictureChenge chenge = this.pcs.get(name);
+		PictureChange chenge = this.pcs.get(name);
 		return new OutSinglePictureUpdate(this.pluginName, p, chenge.state);
 	}
 
@@ -113,11 +114,11 @@ public final class PluginPictureManager extends AbstractConfiguration {
 
 }
 
-class PictureChenge {
+class PictureChange {
 	public final static int REMOVE = 3;
 	public final static int SETURL = 1;
 
-	PictureChenge(int state, String now, String old) {
+	PictureChange(int state, String now, String old) {
 		this.state = state;
 		this.nowName = now;
 		this.oldName = old;

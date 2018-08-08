@@ -30,13 +30,17 @@ public class MeCommand implements SubCommand {
 		if (head.equalsIgnoreCase("lookup")) {
 			if (args.length == 3) {
 				sender.sendMessage(
-				CocoaUI.getPicturesManager().getPluginPictureManager(args[2]).getPackage().toString());
+						CocoaUI.getPicturesManager().getPluginPictureManager(args[2]).getPackage().toString());
 			}
 		}
 		if (head.equalsIgnoreCase("save")) {
 			if (args.length == 3) {
 				CocoaUI.getPicturesManager().getPluginPictureManager(args[2]).save();
 			}
+		}
+		if (head.equalsIgnoreCase("send")) {
+			CocoaUI.getPicturesManager().sendUpdatePackage((Player) sender);
+			sender.sendMessage("已发送");
 		}
 
 	}

@@ -16,8 +16,10 @@ public class PluginMessageListener extends PackageListener {
 		switch (e.getID()) {
 		case 1:
 			InVerifyPackage pack = (InVerifyPackage) e.getPackage();
-			System.out.println(e.getPlayer().getName()+ "通过了验证，装载的CocoaUIMod版本是" + pack.getVersion());
+			System.out.println(e.getPlayer().getName() + "通过了验证，装载的CocoaUIMod版本是" + pack.getVersion());
 			CocoaUI.getVerfiyManager().receiveVerify(e.getPlayer());
+			CocoaUI.getPicturesManager().sendUpdatePackage(e.getPlayer());
+			return;
 		}
 
 	}

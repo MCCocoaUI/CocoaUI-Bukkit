@@ -15,6 +15,7 @@ public class OutPictureUpdate extends AbstractOutPackage {
 	private void writeData() {
 		super.writeJson(this.json);
 	}
+	
 
 	public String toString() {
 		return this.json;

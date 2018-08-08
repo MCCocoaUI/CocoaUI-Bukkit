@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 
 import com.google.common.collect.Maps;
 import net.mcbbs.cocoaui.CocoaUI;
+import net.mcbbs.cocoaui.pluginmessage.packages.OutPictureUpdateSent;
 import net.mcbbs.cocoaui.utils.config.ConfigException;
 
 public class PicturesManager {
@@ -84,10 +85,19 @@ public class PicturesManager {
 		}
 	}
 
+	public void sendUpdatePackage(Player p) {
+
+		for (PluginPictureManager manager : picturemanagers.values()) {
+			CocoaUI.getPluginMessageManager().sendPackage(manager.getPackage(), p);
+		}
+		CocoaUI.getPluginMessageManager().sendPackage(new OutPictureUpdateSent(), p);
+
+	}
+
 	public void save() {
 		for (PluginPictureManager manager : this.picturemanagers.values()) {
 			manager.save();
 		}
 	}
-	
+
 }

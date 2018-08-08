@@ -18,7 +18,6 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 
 import net.mcbbs.cocoaui.pluginmessage.packages.InVerifyPackage;
-import net.mcbbs.cocoaui.pluginmessage.packages.OutSinglePictureUpdate;
 
 public class PluginMessageManager {
 	private Map<Integer, Class<? extends AbstractInPackage>> classes = Maps.newHashMap();
