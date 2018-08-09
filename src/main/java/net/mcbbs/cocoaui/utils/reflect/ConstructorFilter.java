@@ -9,6 +9,6 @@ import java.lang.reflect.Constructor;
 @FunctionalInterface
 public interface ConstructorFilter {
 
-    boolean accept(Constructor constructor);
+    boolean accept(@SuppressWarnings("rawtypes") Constructor constructor);
 
 }

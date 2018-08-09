@@ -81,7 +81,7 @@ public final class NMSUtils {
      */
     public static Object getNMSItem(ItemStack itemStack) {
         if (asNMSCopyMethod == null) {
-            Class craftItemStack = NMSUtils.getOBCClass("inventory.CraftItemStack");
+            Class<?> craftItemStack = NMSUtils.getOBCClass("inventory.CraftItemStack");
             Validate.notNull(itemStack);
 
             try {

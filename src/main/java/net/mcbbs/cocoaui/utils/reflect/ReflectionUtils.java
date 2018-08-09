@@ -103,7 +103,7 @@ public final class ReflectionUtils {
      * @see #hasConstructor(Class, Class[])
      */
     public static Constructor<?> getConstructor(Class<?> clazz, Class<?>... parameterTypes) throws NoSuchMethodException {
-        Constructor constructor = null;
+        Constructor<?> constructor = null;
         if (hasConstructor(clazz, parameterTypes)) {
             constructor = clazz.getConstructor(parameterTypes);
         }
@@ -261,12 +261,13 @@ public final class ReflectionUtils {
      * @param filter filter obj
      * @return true -> yes, false -> no
      */
-    public static boolean hasConstructor(Class<?> clazz, ConstructorFilter filter) {
+    @SuppressWarnings("rawtypes")
+	public static boolean hasConstructor(Class<?> clazz, ConstructorFilter filter) {
         Validate.notNull(filter);
 
         boolean has = false;
-        Constructor[] constructors = clazz.getConstructors();
-        for (Constructor constructor : constructors) {
+		Constructor[] constructors = clazz.getConstructors();
+        for (Constructor<?> constructor : constructors) {
             if (filter.accept(constructor)) {
                 has = true;
                 break;
