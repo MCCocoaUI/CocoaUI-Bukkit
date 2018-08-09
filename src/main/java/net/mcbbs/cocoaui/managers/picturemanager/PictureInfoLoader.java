@@ -21,9 +21,13 @@ public class PictureInfoLoader implements Callable<PictureInfo> {
 	private int width;
 	private int height;
 	private String md5;
+	private String name;
+	private String pluginName;
 
-	public PictureInfoLoader(String url) {
+	public PictureInfoLoader(String url, String name, String pluginName) {
 		this.url = url;
+		this.name = name;
+		this.pluginName = pluginName;
 	}
 
 	@Override
@@ -31,7 +35,8 @@ public class PictureInfoLoader implements Callable<PictureInfo> {
 		this.loadBytes();
 		this.md5 = MD5Tool.md5(this.bytes);
 		this.loadSize();
-		return new PictureInfo(this.url, this.md5, this.width, this.height);
+	
+		return new PictureInfo(this.url, this.md5, this.width, this.height, this.name, pluginName);
 	}
 
 	private void loadBytes() {

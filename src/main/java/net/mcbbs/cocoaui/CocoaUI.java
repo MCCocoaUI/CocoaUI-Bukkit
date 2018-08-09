@@ -31,6 +31,8 @@ public class CocoaUI extends JavaPlugin {
 
 	public void onDisable() {
 		pm.save();
+		vm.onDisable();
+		pm.onDisable();
 	}
 
 	private void registerListeners() {
@@ -49,6 +51,7 @@ public class CocoaUI extends JavaPlugin {
 		CocoaUI.pmm = new PluginMessageManager();
 		CocoaUI.ch = new CommandHandler();
 		CocoaUI.pm = new PicturesManager();
+		pm.init();
 		CocoaUI.vm = new VerifyManager();
 	}
 
@@ -73,7 +76,11 @@ public class CocoaUI extends JavaPlugin {
 	}
 
 	public static VerifyManager getVerfiyManager() {
-		return  CocoaUI. vm;
+		return CocoaUI.vm;
+	}
+
+	public static boolean isFinish() {
+		return pm.isFinish();
 	}
 
 }

@@ -89,6 +89,7 @@ public class PluginMessageManager {
 	}
 
 	public void sendAll(AbstractOutPackage pack) {
+		System.out.println(pack);
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			this.sendPackage(pack, p);
 		}

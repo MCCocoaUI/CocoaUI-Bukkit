@@ -15,24 +15,38 @@ import net.mcbbs.cocoaui.utils.config.ConfigException;
 public final class PluginPictureManager extends AbstractConfiguration {
 	private Map<String, Picture> pics = Maps.newHashMap();
 	private Map<String, PictureChange> pcs = Maps.newHashMap();
+
 	private String pluginName;
 
 	public PluginPictureManager(String pluginName) throws ConfigException {
 		super("picconfig/" + pluginName + ".yml", false, "pluginName.yml created", "cannot create pictures.yml");
 		this.pluginName = pluginName;
+		CocoaUI.getLog().info("[PictureManager]正在加載 " + pluginName);
+
 		this.loadConfig();
 	}
 
 	@Override
 	public void loadConfig() {
 		for (String name : super.getConfig().getKeys(false)) {
-			this.loadPicture((Picture) super.getConfig().get(name));
+			Picture picture = (Picture) super.getConfig().get(name);
+			this.pics.put(picture.getName(), picture);
+			this.check(picture);
 		}
+	}
+
+	private void check(Picture picture) {
+		if (picture.check()) {
+			picture.setLock(true);
+			CocoaUI.getPicturesManager().reloadPictureInfo(picture.getUrl(), picture.getName(), pluginName);
+		}
+
 	}
 
 	public boolean setURL(String name, String url) {
 		if (this.pics.containsKey(name)) {
 			this.pics.get(name).setUrl(url);
+			CocoaUI.getPicturesManager().reloadPictureInfo(url, name, pluginName);
 			this.pcs.put(name, new PictureChange(PictureChange.SETURL, name, null));
 			return true;
 		}
@@ -43,6 +57,7 @@ public final class PluginPictureManager extends AbstractConfiguration {
 		if (this.pics.containsKey(name)) {
 			this.pics.remove(name);
 			this.pcs.put(name, new PictureChange(PictureChange.REMOVE, name, null));
+			this.update(name);
 			return true;
 		}
 		return false;
@@ -58,6 +73,7 @@ public final class PluginPictureManager extends AbstractConfiguration {
 
 	public void loadPicture(Picture p) {
 		this.pics.put(p.getName(), p);
+		CocoaUI.getPicturesManager().reloadPictureInfo(p.getUrl(), p.getName(), pluginName);
 	}
 
 	public boolean contains(String name) {
@@ -69,7 +85,6 @@ public final class PluginPictureManager extends AbstractConfiguration {
 		map.put("name", p.getName());
 		map.put("url", p.getUrl());
 		map.put("md5", p.getMD5());
-		System.out.println(p.getMD5());
 		return map;
 	}
 
@@ -103,13 +118,23 @@ public final class PluginPictureManager extends AbstractConfiguration {
 
 	public boolean update(String name) {
 		if (this.pcs.containsKey(name)) {
-			if(this.pics.containsKey(name)) {
+			if (this.pics.containsKey(name)) {
 				Picture pic = this.pics.get(name);
 				OutSinglePictureUpdate pack = this.getUpdatePackage(name, pic);
 				CocoaUI.getPluginMessageManager().sendAll(pack);
 			}
 		}
 		return false;
+	}
+
+	public void updateInfo(String name, PictureInfo value) {
+		if (this.pics.containsKey(name)) {
+			if(this.pcs.containsKey(name)) {
+				this.update(name);
+			}
+			this.pics.get(name).setInfo(value);
+		}
+
 	}
 
 }

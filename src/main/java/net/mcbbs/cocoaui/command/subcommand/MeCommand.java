@@ -42,6 +42,16 @@ public class MeCommand implements SubCommand {
 			CocoaUI.getPicturesManager().sendUpdatePackage((Player) sender);
 			sender.sendMessage("已发送");
 		}
+		if (head.equalsIgnoreCase("setURL")) {
+			if (args.length == 5) {
+				CocoaUI.getPicturesManager().getPluginPictureManager(args[2]).setURL(args[3], args[4]);
+			}
+		}
+		if(head.equalsIgnoreCase("remove")) {
+			if (args.length == 4) {
+				CocoaUI.getPicturesManager().getPluginPictureManager(args[2]).removePicture(args[3]);
+			}
+		}
 
 	}
 }
