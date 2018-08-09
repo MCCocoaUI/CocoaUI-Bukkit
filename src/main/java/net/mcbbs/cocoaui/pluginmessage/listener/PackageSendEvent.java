@@ -5,36 +5,40 @@ import org.bukkit.entity.Player;
 import net.mcbbs.cocoaui.pluginmessage.AbstractOutPackage;
 
 public class PackageSendEvent {
-	boolean isCancelled = false;
-	AbstractOutPackage pack;
-	Player p;
-	int id;
 
-	public PackageSendEvent(AbstractOutPackage a) {
-		this.pack = a;
-		this.id = a.getID();
-	}
+    boolean isCancelled = false;
+    AbstractOutPackage pack;
+    Player p;
+    int id;
 
-	public PackageSendEvent(AbstractOutPackage out, Player p) {
-		this.p = p;
-		this.pack = out;
-	}
+    public PackageSendEvent(AbstractOutPackage a) {
+        this.pack = a;
+        this.id = a.getID();
+    }
 
-	public void setCancelled(boolean arg) {
-		this.isCancelled = arg;
-	}
+    public PackageSendEvent(AbstractOutPackage out, Player p) {
+        this.p = p;
+        this.pack = out;
+    }
 
-	public boolean isCancelled() {
-		return this.isCancelled;
-	}
+    public void setCancelled(boolean arg) {
+        this.isCancelled = arg;
+    }
 
-	public int getID() {
-		return this.id;
-	}
+    public boolean isCancelled() {
+        return this.isCancelled;
+    }
 
-	public Player getPlayer() {
-		return this.p;
-	}
-	public AbstractOutPackage getPackage() {return pack;}
+    public int getID() {
+        return this.id;
+    }
+
+    public Player getPlayer() {
+        return this.p;
+    }
+
+    public AbstractOutPackage getPackage() {
+        return pack;
+    }
 
 }

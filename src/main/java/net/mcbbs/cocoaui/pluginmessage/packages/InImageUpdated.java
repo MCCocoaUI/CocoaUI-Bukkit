@@ -10,30 +10,31 @@ import net.mcbbs.cocoaui.pluginmessage.AbstractInPackage;
  * <String> name<br>
  */
 public class InImageUpdated extends AbstractInPackage {
-	private String url;
-	private String name;
-	private Player p;
 
-	public InImageUpdated(byte[] data, Player sender, int id) {
-		super(data, sender, id);
-		this.readData();
-	}
+    private String url;
+    private String name;
+    private Player p;
 
-	private void readData() {
-		this.url = super.getByteArrayDataInput().readUTF();
-		this.name = super.getByteArrayDataInput().readUTF();
-	}
+    public InImageUpdated(byte[] data, Player sender, int id) {
+        super(data, sender, id);
+        this.readData();
+    }
 
-	public String getUrl() {
-		return url;
-	}
+    private void readData() {
+        this.url = super.getByteArrayDataInput().readUTF();
+        this.name = super.getByteArrayDataInput().readUTF();
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getUrl() {
+        return url;
+    }
 
-	public Player getP() {
-		return p;
-	}
+    public String getName() {
+        return name;
+    }
+
+    public Player getP() {
+        return p;
+    }
 
 }

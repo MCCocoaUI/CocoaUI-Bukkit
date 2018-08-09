@@ -13,52 +13,55 @@ import net.mcbbs.cocoaui.CocoaUI;
 import net.mcbbs.cocoaui.pluginmessage.packages.OutVerifyPackage;
 
 public class VerifyManager {
-	Map<UUID, Integer> verifylist = Maps.newHashMap();
-	BukkitTask task;
 
-	public void verifyPlayer(Player p) {
-		Bukkit.getScheduler().runTaskLater(CocoaUI.getPlugin(CocoaUI.class), new Runnable() {
-			@Override
-			public void run() {
-				verifylist.put(p.getUniqueId(), 0);
-				CocoaUI.getPluginMessageManager().sendPackage(new OutVerifyPackage(), p);
-				
-			}}, 10);
+    Map<UUID, Integer> verifylist = Maps.newHashMap();
+    BukkitTask task;
 
-	}
+    public void verifyPlayer(Player p) {
+        Bukkit.getScheduler().runTaskLater(CocoaUI.getPlugin(CocoaUI.class), new Runnable() {
+            @Override
+            public void run() {
+                verifylist.put(p.getUniqueId(), 0);
+                CocoaUI.getPluginMessageManager().sendPackage(new OutVerifyPackage(), p);
 
-	public VerifyManager() {
-		this.start();
-	}
+            }
+        }, 10);
 
-	public void receiveVerify(Player p) {
-		this.verifylist.remove(p.getUniqueId());
-	}
+    }
 
-	private void start() {
-		task = Bukkit.getScheduler().runTaskTimer(CocoaUI.getPlugin(CocoaUI.class), new Runnable() {
-			@Override
-			public void run() {
-				task();
+    public VerifyManager() {
+        this.start();
+    }
 
-			}
-		}, 20L, 20L);
-	}
+    public void receiveVerify(Player p) {
+        this.verifylist.remove(p.getUniqueId());
+    }
 
-	private void task() {
-		for (UUID uuid : verifylist.keySet()) {
-			int i = this.verifylist.get(uuid);
-			if (i++ > 5) {
-				if(Bukkit.getPlayer(uuid)!=null)
-				Bukkit.getPlayer(uuid).kickPlayer("Please install CocoaUI mod");
-				this.verifylist.remove(uuid);
-			} else {
-				this.verifylist.put(uuid, i);
-			}
-		}
-	}
+    private void start() {
+        task = Bukkit.getScheduler().runTaskTimer(CocoaUI.getPlugin(CocoaUI.class), new Runnable() {
+            @Override
+            public void run() {
+                task();
 
-	public void onDisable() {
-		this.task.cancel();
-	}
+            }
+        }, 20L, 20L);
+    }
+
+    private void task() {
+        for (UUID uuid : verifylist.keySet()) {
+            int i = this.verifylist.get(uuid);
+            if (i++ > 5) {
+                if (Bukkit.getPlayer(uuid) != null) {
+                    Bukkit.getPlayer(uuid).kickPlayer("Please install CocoaUI mod");
+                }
+                this.verifylist.remove(uuid);
+            } else {
+                this.verifylist.put(uuid, i);
+            }
+        }
+    }
+
+    public void onDisable() {
+        this.task.cancel();
+    }
 }
