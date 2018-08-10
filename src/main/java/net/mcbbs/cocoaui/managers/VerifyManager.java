@@ -15,6 +15,7 @@ import net.mcbbs.cocoaui.pluginmessage.packages.OutVerifyPackage;
 public class VerifyManager {
 	Map<UUID, Integer> verifylist = Maps.newHashMap();
 	BukkitTask task;
+	boolean forceUseMod;
 
 	public void verifyPlayer(Player p) {
 		Bukkit.getScheduler().runTaskLater(CocoaUI.getPlugin(CocoaUI.class), new Runnable() {
@@ -30,6 +31,10 @@ public class VerifyManager {
 
 	public VerifyManager() {
 		this.start();
+	}
+
+	public void setForceUseMod(boolean value) {
+		this.forceUseMod = value;
 	}
 
 	public void receiveVerify(Player p) {
@@ -50,8 +55,10 @@ public class VerifyManager {
 		for (UUID uuid : verifylist.keySet()) {
 			int i = this.verifylist.get(uuid);
 			if (i++ > 5) {
-				if (Bukkit.getPlayer(uuid) != null)
-					Bukkit.getPlayer(uuid).kickPlayer("Please install CocoaUI mod");
+				if (this.forceUseMod) {
+					if (Bukkit.getPlayer(uuid) != null)
+						Bukkit.getPlayer(uuid).kickPlayer("Please install CocoaUI mod");
+				}
 				this.verifylist.remove(uuid);
 			} else {
 				this.verifylist.put(uuid, i);
