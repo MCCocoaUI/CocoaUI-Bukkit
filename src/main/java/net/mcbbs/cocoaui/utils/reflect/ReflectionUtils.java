@@ -6,6 +6,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.function.Predicate;
 
 /**
  * Easy to reflect
@@ -22,10 +23,11 @@ public final class ReflectionUtils {
     /**
      * get field objects by using field names
      *
-     * @param clazz     class's object
+     * @param clazz class's object
      * @param fieldName field's name
      * @return {@link Field}
-     * @throws NoSuchFieldException If the field with the specified name cannot be found
+     * @throws NoSuchFieldException If the field with the specified name cannot
+     * be found
      * @see #hasField(Class, String)
      */
     public static Field getFieldByFieldName(Class<?> clazz, String fieldName) throws NoSuchFieldException {
@@ -41,18 +43,18 @@ public final class ReflectionUtils {
      * @param fieldName field's name
      * @return {@link Field}
      * @throws ClassNotFoundException If the class cannot be found
-     * @throws NoSuchFieldException   If the field with the specified name cannot be found
+     * @throws NoSuchFieldException If the field with the specified name cannot
+     * be found
      * @see #getFieldByFieldName(Class, String)
      */
     public static Field getFieldByFieldName(String classPath, String fieldName) throws ClassNotFoundException, NoSuchFieldException {
         return getFieldByFieldName(Class.forName(classPath), fieldName);
     }
 
-
     /**
      * get a Value field
      *
-     * @param obj       object
+     * @param obj object
      * @param fieldName field's name
      * @return {@link Object}
      * @throws IllegalAccessException If the field is accessible
@@ -77,9 +79,9 @@ public final class ReflectionUtils {
     /**
      * set a object's Value field
      *
-     * @param obj       object
+     * @param obj object
      * @param fieldName field's name
-     * @param value     the value to be set
+     * @param value the value to be set
      * @throws NoSuchFieldException If the field is missing
      */
     public static void setValueByFieldName(Object obj, String fieldName, Object value) throws NoSuchFieldException, IllegalAccessException {
@@ -96,10 +98,11 @@ public final class ReflectionUtils {
     /**
      * get a class's constructor
      *
-     * @param clazz          class's object
+     * @param clazz class's object
      * @param parameterTypes parameters
      * @return {@link Constructor}
-     * @throws NoSuchMethodException If the constructor with the specified parameter types cannot be found
+     * @throws NoSuchMethodException If the constructor with the specified
+     * parameter types cannot be found
      * @see #hasConstructor(Class, Class[])
      */
     public static Constructor<?> getConstructor(Class<?> clazz, Class<?>... parameterTypes) throws NoSuchMethodException {
@@ -113,27 +116,30 @@ public final class ReflectionUtils {
     /**
      * get a class's constructor
      *
-     * @param classPath      class's path
+     * @param classPath class's path
      * @param parameterTypes parameters
      * @return {@link Constructor}
      * @throws ClassNotFoundException If the class cannot be found
-     * @throws NoSuchMethodException  If the constructor with the specified parameter types cannot be found
+     * @throws NoSuchMethodException If the constructor with the specified
+     * parameter types cannot be found
      * @see #getConstructor(Class, Class[])
      */
     public static Constructor<?> getConstructor(String classPath, Class<?>... parameterTypes) throws ClassNotFoundException, NoSuchMethodException {
         return getConstructor(Class.forName(classPath), parameterTypes);
     }
 
-
     /**
      * Constructing an object with a constructor
      *
      * @param constructor the Constructor
-     * @param arguments   the constructor's arguments
+     * @param arguments the constructor's arguments
      * @return {@link Object}
-     * @throws IllegalAccessException    If the desired constructor cannot be accessed due to certain circumstances
-     * @throws InvocationTargetException If the desired constructor cannot be invoked
-     * @throws InstantiationException    If you cannot create an instance of the target class due to certain circumstances
+     * @throws IllegalAccessException If the desired constructor cannot be
+     * accessed due to certain circumstances
+     * @throws InvocationTargetException If the desired constructor cannot be
+     * invoked
+     * @throws InstantiationException If you cannot create an instance of the
+     * target class due to certain circumstances
      */
     public static Object instantiateObject(Constructor<?> constructor, Object... arguments) throws IllegalAccessException, InvocationTargetException, InstantiationException {
         return Validate.notNull(constructor).newInstance(arguments);
@@ -142,11 +148,12 @@ public final class ReflectionUtils {
     /**
      * get a method in a class
      *
-     * @param clazz          class's object
-     * @param methodName     method's name
+     * @param clazz class's object
+     * @param methodName method's name
      * @param parameterTypes the method's arguments
      * @return {@link Method}
-     * @throws NoSuchMethodException If the method with the specified parameter types cannot be found
+     * @throws NoSuchMethodException If the method with the specified parameter
+     * types cannot be found
      */
     public static Method getMethod(Class<?> clazz, String methodName, Class<?>... parameterTypes) throws NoSuchMethodException {
         if (hasMethod(clazz, methodName, parameterTypes)) {
@@ -158,12 +165,13 @@ public final class ReflectionUtils {
     /**
      * get a method in a class
      *
-     * @param classPath      class's path
-     * @param methodName     method's name
+     * @param classPath class's path
+     * @param methodName method's name
      * @param parameterTypes the method's arguments
      * @return {@link Method}
      * @throws ClassNotFoundException If the class cannot be found
-     * @throws NoSuchMethodException  If the method with the specified parameter types cannot be found
+     * @throws NoSuchMethodException If the method with the specified parameter
+     * types cannot be found
      * @see #getMethod(Class, String, Class[])
      */
     public static Method getMethod(String classPath, String methodName, Class<?>... parameterTypes) throws ClassNotFoundException, NoSuchMethodException {
@@ -173,12 +181,13 @@ public final class ReflectionUtils {
     /**
      * method of invocation of object
      *
-     * @param method    method's object
-     * @param object    objects that need invoke
+     * @param method method's object
+     * @param object objects that need invoke
      * @param arguments the method's arguments
      * @return {@link Object}
      * @throws InvocationTargetException If the desired method cannot be invoked
-     * @throws IllegalAccessException    If the desired method cannot be accessed due to certain circumstances
+     * @throws IllegalAccessException If the desired method cannot be accessed
+     * due to certain circumstances
      */
     public static Object invokeMethod(Method method, Object object, Object... arguments) throws InvocationTargetException, IllegalAccessException {
         return Validate.notNull(method).invoke(object, arguments);
@@ -187,7 +196,7 @@ public final class ReflectionUtils {
     /**
      * check a class has a specified field
      *
-     * @param clazz     class's object
+     * @param clazz class's object
      * @param fieldName field's name
      * @return true -> yes, false -> no
      */
@@ -206,17 +215,17 @@ public final class ReflectionUtils {
     /**
      * check a class has a specified field
      *
-     * @param clazz  class's object
+     * @param clazz class's object
      * @param filter filter obj
      * @return true -> yes, false -> no
      */
-    public static boolean hasField(Class<?> clazz, FieldFilter filter) {
+    public static boolean hasField(Class<?> clazz, Predicate<Field> filter) {
         Validate.notNull(filter);
 
         boolean has = false;
         Field[] fields = clazz.getFields();
         for (Field field : fields) {
-            if (filter.accept(field)) {
+            if (filter.test(field)) {
                 has = true;
                 break;
             }
@@ -239,7 +248,7 @@ public final class ReflectionUtils {
     /**
      * check a class has a specified constructor
      *
-     * @param clazz          class's object
+     * @param clazz class's object
      * @param parameterTypes the constructor with the specified parameter types
      * @return true -> yes, false -> no
      */
@@ -257,18 +266,18 @@ public final class ReflectionUtils {
     /**
      * check a class has a specified constructor
      *
-     * @param clazz  class's object
+     * @param clazz class's object
      * @param filter filter obj
      * @return true -> yes, false -> no
      */
     @SuppressWarnings("rawtypes")
-	public static boolean hasConstructor(Class<?> clazz, ConstructorFilter filter) {
+    public static boolean hasConstructor(Class<?> clazz, Predicate<Constructor> filter) {
         Validate.notNull(filter);
 
         boolean has = false;
-		Constructor[] constructors = clazz.getConstructors();
+        Constructor[] constructors = clazz.getConstructors();
         for (Constructor<?> constructor : constructors) {
-            if (filter.accept(constructor)) {
+            if (filter.test(constructor)) {
                 has = true;
                 break;
             }
@@ -279,7 +288,7 @@ public final class ReflectionUtils {
     /**
      * check a class has a specified constructor
      *
-     * @param classPath      class's path
+     * @param classPath class's path
      * @param parameterTypes the constructor with the specified parameter types
      * @return true -> yes, false -> no
      * @see #hasField(Class, String)
@@ -288,12 +297,11 @@ public final class ReflectionUtils {
         return hasConstructor(Class.forName(classPath), parameterTypes);
     }
 
-
     /**
      * check a class has a specified method
      *
-     * @param clazz          class's object
-     * @param methodName     method's name
+     * @param clazz class's object
+     * @param methodName method's name
      * @param parameterTypes the method with the specified parameter types
      * @return true -> yes, false -> no
      */
@@ -311,17 +319,17 @@ public final class ReflectionUtils {
     /**
      * check a class has a specified method
      *
-     * @param clazz  class's object
+     * @param clazz class's object
      * @param filter filter obj
      * @return true -> yes, false -> no
      */
-    public static boolean hasMethod(Class<?> clazz, MethodFilter filter) {
+    public static boolean hasMethod(Class<?> clazz, Predicate<Method> filter) {
         Validate.notNull(filter);
 
         boolean has = false;
         Method[] methods = clazz.getMethods();
         for (Method method : methods) {
-            if (filter.accept(method)) {
+            if (filter.test(method)) {
                 has = true;
                 break;
             }
@@ -332,8 +340,8 @@ public final class ReflectionUtils {
     /**
      * check a class has a specified method
      *
-     * @param classPath      class's path
-     * @param methodName     method's name
+     * @param classPath class's path
+     * @param methodName method's name
      * @param parameterTypes the method with the specified parameter types
      * @return true -> yes, false -> no
      * @see #hasMethod(Class, String, Class[])
