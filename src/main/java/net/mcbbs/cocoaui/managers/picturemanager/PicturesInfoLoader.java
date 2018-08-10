@@ -17,59 +17,60 @@ import net.mcbbs.cocoaui.utils.MD5Tool;
 
 /**
  * 图片信息异步加载类 内部使用
- * 
+ *
  * @author ChenJi
  *
  */
 public class PicturesInfoLoader implements Callable<PictureInfo> {
-	private String url;
-	private byte[] bytes;
-	private int width;
-	private int height;
-	private String md5;
-	private String name;
-	private String pluginName;
 
-	public PicturesInfoLoader(String url, String name, String pluginName) {
-		this.url = url;
-		this.name = name;
-		this.pluginName = pluginName;
-	}
+    private String url;
+    private byte[] bytes;
+    private int width;
+    private int height;
+    private String md5;
+    private String name;
+    private String pluginName;
 
-	@Override
-	public PictureInfo call() throws Exception {
-		this.loadBytes();
-		this.md5 = MD5Tool.md5(this.bytes);
-		this.loadSize();
+    public PicturesInfoLoader(String url, String name, String pluginName) {
+        this.url = url;
+        this.name = name;
+        this.pluginName = pluginName;
+    }
 
-		return new PictureInfo(this.url, this.md5, this.width, this.height, this.name, pluginName);
-	}
+    @Override
+    public PictureInfo call() throws Exception {
+        this.loadBytes();
+        this.md5 = MD5Tool.md5(this.bytes);
+        this.loadSize();
 
-	private void loadBytes() {
-		try (InputStream in = new URI(this.url).toURL().openStream()) {
-			ByteArrayDataOutput out = ByteStreams.newDataOutput();
-			byte[] bs = new byte[16384];
-			int len;
-			while ((len = in.read(bs)) != -1) {
-				out.write(bs, 0, len);
-			}
-			bytes = out.toByteArray();
+        return new PictureInfo(this.url, this.md5, this.width, this.height, this.name, pluginName);
+    }
 
-		} catch (IOException | URISyntaxException e) {
-			e.printStackTrace();
-		}
+    private void loadBytes() {
+        try (InputStream in = new URI(this.url).toURL().openStream()) {
+            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+            byte[] bs = new byte[16384];
+            int len;
+            while ((len = in.read(bs)) != -1) {
+                out.write(bs, 0, len);
+            }
+            bytes = out.toByteArray();
 
-	}
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
 
-	private void loadSize() {
-		BufferedImage img;
-		try {
-			img = ImageIO.read(new ByteArrayInputStream(this.bytes));
-			this.width = img.getWidth();
-			this.height = img.getHeight();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+    }
+
+    private void loadSize() {
+        BufferedImage img;
+        try {
+            img = ImageIO.read(new ByteArrayInputStream(this.bytes));
+            this.width = img.getWidth();
+            this.height = img.getHeight();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
