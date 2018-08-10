@@ -10,6 +10,5 @@ import org.bukkit.command.CommandSender;
  */
 @FunctionalInterface
 public interface SubCommand {
-
-    void execute(CommandSender sender, String[] args);
+	void execute(CommandSender sender, String[] args);
 }

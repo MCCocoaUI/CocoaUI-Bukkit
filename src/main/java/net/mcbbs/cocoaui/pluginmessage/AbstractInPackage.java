@@ -6,8 +6,10 @@ import org.json.simple.JSONValue;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
+
 /**
  * 抽象输入包
+ * 
  * @author ChenJi
  *
  */
@@ -17,11 +19,13 @@ public abstract class AbstractInPackage {
 	protected byte[] orgianData;
 	protected Player sender;
 	protected int id;
+
 	/**
 	 * 构造函数
-	 * @param data 原始数据
+	 * 
+	 * @param data   原始数据
 	 * @param sender 发送者
-	 * @param id 包的ID
+	 * @param id     包的ID
 	 */
 	public AbstractInPackage(byte[] data, Player sender, int id) {
 		this.orgianData = data;

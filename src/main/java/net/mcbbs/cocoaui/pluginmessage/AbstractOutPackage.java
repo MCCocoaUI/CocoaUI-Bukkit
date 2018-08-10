@@ -5,6 +5,7 @@ import com.google.common.io.ByteStreams;
 
 /**
  * 抽象输出包
+ * 
  * @author ChenJi
  *
  */

@@ -22,8 +22,9 @@ public class VerifyManager {
 			public void run() {
 				verifylist.put(p.getUniqueId(), 0);
 				CocoaUI.getPluginMessageManager().sendPackage(new OutVerifyPackage(), p);
-				
-			}}, 10);
+
+			}
+		}, 10);
 
 	}
 
@@ -49,8 +50,8 @@ public class VerifyManager {
 		for (UUID uuid : verifylist.keySet()) {
 			int i = this.verifylist.get(uuid);
 			if (i++ > 5) {
-				if(Bukkit.getPlayer(uuid)!=null)
-				Bukkit.getPlayer(uuid).kickPlayer("Please install CocoaUI mod");
+				if (Bukkit.getPlayer(uuid) != null)
+					Bukkit.getPlayer(uuid).kickPlayer("Please install CocoaUI mod");
 				this.verifylist.remove(uuid);
 			} else {
 				this.verifylist.put(uuid, i);
