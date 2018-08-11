@@ -61,10 +61,12 @@ public final class PluginPicturesManager extends AbstractConfiguration {
      * @return 是否成功，图片未找到则返回false
      */
     public boolean setURL(String name, String url) {
+
         if (this.pictures.containsKey(name)) {
             this.pictures.get(name).setUrl(url);
             CocoaUI.getPicturesManager().reloadPictureInfo(url, name, pluginName);
             this.picturechanges.put(name, new PictureChange(PictureChange.SETURL, name, null));
+      
             return true;
         }
         return false;

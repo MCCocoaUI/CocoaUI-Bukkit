@@ -17,6 +17,7 @@ import com.google.common.collect.Sets;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 
+import net.mcbbs.cocoaui.pluginmessage.packages.InPictureChooserBack;
 import net.mcbbs.cocoaui.pluginmessage.packages.InVerifyPackage;
 
 /**
@@ -136,6 +137,7 @@ public class PluginMessageManager {
 
 	private void init() {
 		this.registerPackage(1, InVerifyPackage.class);
+		this.registerPackage(5, InPictureChooserBack.class);
 	}
 
 	/**

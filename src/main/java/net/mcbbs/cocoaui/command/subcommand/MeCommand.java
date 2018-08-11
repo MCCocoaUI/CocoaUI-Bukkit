@@ -52,6 +52,12 @@ public class MeCommand implements SubCommand {
 				CocoaUI.getPicturesManager().getPluginPictureManager(args[2]).removePicture(args[3]);
 			}
 		}
+		if (head.equalsIgnoreCase("updateUrl")) {
+			if (args.length == 4) {
+				CocoaUI.getPicturesManager().sendUpdateRequest((Player) sender, args[2], args[3]);
+				sender.sendMessage("请在弹出的窗口里选择图片");
+			}
+		}
 
 	}
 }
