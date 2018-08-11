@@ -3,6 +3,7 @@ package net.mcbbs.cocoaui.listeners;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.server.ServerEvent;
 
 import net.mcbbs.cocoaui.CocoaUI;
 
@@ -13,9 +14,10 @@ public class PlayerListener implements Listener {
 		CocoaUI.getVerfiyManager().verifyPlayer(e.getPlayer());
 	}
 	@EventHandler
-	public void onPlayerJoin(Server e) {
-		CocoaUI.getPicturesManager().onServerDone();
+	public void onPlayerJoin(ServerEvent e) {
+		System.out.println(e);
+		//CocoaUI.getPicturesManager().onServerDone();
 		//TODO
 	}
-}
+
 }
