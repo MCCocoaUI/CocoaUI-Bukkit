@@ -9,19 +9,25 @@ import net.mcbbs.cocoaui.listeners.PluginMessageListener;
 import net.mcbbs.cocoaui.managers.VerifyManager;
 import net.mcbbs.cocoaui.managers.picturemanager.Picture;
 import net.mcbbs.cocoaui.managers.picturemanager.PicturesManager;
+import net.mcbbs.cocoaui.plugin.CocoaPluginManager;
 import net.mcbbs.cocoaui.pluginmessage.Listener;
 import net.mcbbs.cocoaui.pluginmessage.PluginMessageManager;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CocoaUI extends JavaPlugin {
+	public CocoaUI(){
+		CocoaUI.cocoaPluginManager = new CocoaPluginManager();
+	}
 	private static File dataFolder;
 	private static Logger log;
 	private static PluginMessageManager pluginMessageManager;
 	private static CommandHandler commandHandler;
 	private static PicturesManager picturesManager;
 	private static VerifyManager verifyManager;
+	private static CocoaPluginManager cocoaPluginManager;
 
 	public void onEnable() {
 		ConfigurationSerialization.registerClass(Picture.class);
@@ -46,6 +52,7 @@ public class CocoaUI extends JavaPlugin {
 	}
 
 	private void initStatic() {
+
 		CocoaUI.dataFolder = super.getDataFolder();
 		CocoaUI.log = super.getLogger();
 		CocoaUI.pluginMessageManager = new PluginMessageManager();
@@ -53,6 +60,7 @@ public class CocoaUI extends JavaPlugin {
 		CocoaUI.picturesManager = new PicturesManager();
 		picturesManager.init();
 		CocoaUI.verifyManager = new VerifyManager();
+
 	}
 
 	public static File getKDataFolder() {
@@ -80,7 +88,11 @@ public class CocoaUI extends JavaPlugin {
 	}
 
 	public static boolean isFinish() {
-		return picturesManager.isFinish();
+		return CocoaUI.picturesManager.isFinish();
+	}
+
+	public static CocoaPluginManager getCocoaPluginManager() {
+		return CocoaUI.cocoaPluginManager;
 	}
 
 }

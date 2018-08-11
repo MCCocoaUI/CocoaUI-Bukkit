@@ -11,6 +11,11 @@ public class PlayerListener implements Listener {
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
 		CocoaUI.getVerfiyManager().verifyPlayer(e.getPlayer());
-
 	}
+	@EventHandler
+	public void onPlayerJoin(Server e) {
+		CocoaUI.getPicturesManager().onServerDone();
+		//TODO
+	}
+}
 }

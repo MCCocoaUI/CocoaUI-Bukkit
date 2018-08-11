@@ -2,6 +2,7 @@ package net.mcbbs.cocoaui.managers.picturemanager;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -36,6 +37,7 @@ public class PicturesManager {
 	private Map<PictureName, Future<PictureInfo>> updateList = Maps.newHashMap();
 	private ExecutorService pool = Executors.newFixedThreadPool(4);
 	private Set<PictureName> finish = Sets.newHashSet();
+	private HashMap<PictureName, PicturesInfoLoader> waitLoadList = Maps.newHashMap();
 	private int loaded;
 	private int timer = 0;
 	private boolean firstLoad = true;
@@ -47,8 +49,6 @@ public class PicturesManager {
 	public void init() {
 		this.loadManagers();
 		CocoaUI.getLog().info("[PictureManager]所有信息加载完成，等待异步验证 ");
-
-		this.startTask();
 	}
 
 	/**
@@ -59,10 +59,9 @@ public class PicturesManager {
 	 * @return 是否成功，图片未找到则返回false
 	 */
 	public boolean setURL(Player p, String url) {
-		System.out.println("1");
-		if (this.pictureEditors.containsKey(p.getUniqueId())) {	System.out.println("3");
+		if (this.pictureEditors.containsKey(p.getUniqueId())) {
 			PictureEditor editor = this.pictureEditors.get(p.getUniqueId());
-			if (pictureManagers.containsKey(editor.getPluginName())) {	System.out.println("2");
+			if (pictureManagers.containsKey(editor.getPluginName())) {
 				return this.pictureManagers.get(editor.getPluginName()).setURL(editor.getName(), url);
 			}
 		}
@@ -70,7 +69,7 @@ public class PicturesManager {
 	}
 
 	private void startTask() {
-		Bukkit.getScheduler().runTaskTimer(CocoaUI.getPlugin(CocoaUI.class), new Runnable() {
+		this.task = Bukkit.getScheduler().runTaskTimer(CocoaUI.getPlugin(CocoaUI.class), new Runnable() {
 			@Override
 			public void run() {
 				onTick();
@@ -184,9 +183,20 @@ public class PicturesManager {
 	 * @param pluginName 所属插件名称
 	 */
 	public void reloadPictureInfo(String url, String name, String pluginName) {
-		this.updateList.put(new PictureName(name, pluginName),
-				this.pool.submit(new PicturesInfoLoader(url, name, pluginName)));
+		if (!this.firstLoad) {
+			this.updateList.put(new PictureName(name, pluginName),
+					this.pool.submit(new PicturesInfoLoader(url, name, pluginName)));
+			return;
+		}
+		this.waitLoadList.put(new PictureName(name, pluginName), new PicturesInfoLoader(url, name, pluginName));
 		return;
+	}
+
+	public void onServerDone() {
+		for (Entry<PictureName, PicturesInfoLoader> entry : this.waitLoadList.entrySet()) {
+			this.updateList.put(entry.getKey(), this.pool.submit(entry.getValue()));
+		}
+		this.startTask();
 	}
 
 	void onTick() {
@@ -246,7 +256,6 @@ public class PicturesManager {
 		this.pictureEditors.put(p.getUniqueId(), new PictureEditor(p.getUniqueId(), pluginName, name));
 		CocoaUI.getPluginMessageManager().sendPackage(new OutOpenPictureChooser(), p);
 	}
-
 }
 
 class PictureName {
