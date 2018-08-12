@@ -249,7 +249,8 @@ public class PicturesManager {
 	}
 
 	public void onDisable() {
-		this.task.cancel();
+		if (this.task != null)
+			this.task.cancel();
 	}
 
 	public void sendUpdateRequest(Player p, String pluginName, String name) {
