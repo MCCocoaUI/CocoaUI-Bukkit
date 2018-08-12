@@ -19,7 +19,7 @@ import net.mcbbs.cocoaui.utils.config.ConfigException;
  *
  */
 public final class PluginPicturesManager extends AbstractConfiguration {
-
+	
 	private Map<String, Picture> pictures = Maps.newHashMap();
 	private Map<String, PictureChange> picturechanges = Maps.newHashMap();
 

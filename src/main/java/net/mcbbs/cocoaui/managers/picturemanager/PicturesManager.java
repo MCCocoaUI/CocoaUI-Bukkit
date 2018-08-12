@@ -2,6 +2,7 @@ package net.mcbbs.cocoaui.managers.picturemanager;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -22,6 +23,7 @@ import com.google.common.collect.Sets;
 import net.mcbbs.cocoaui.CocoaUI;
 import net.mcbbs.cocoaui.pluginmessage.packages.OutOpenPictureChooser;
 import net.mcbbs.cocoaui.pluginmessage.packages.OutPictureUpdateSent;
+import net.mcbbs.cocoaui.utils.config.AbstractConfiguration;
 import net.mcbbs.cocoaui.utils.config.ConfigException;
 
 /**
@@ -30,8 +32,19 @@ import net.mcbbs.cocoaui.utils.config.ConfigException;
  * @author ChenJi
  *
  */
-public class PicturesManager {
+public class PicturesManager extends AbstractConfiguration {
 
+	public PicturesManager() throws ConfigException {
+		super("picturemanagers.yml", false, "成功创建picturemanagers.yml", "无法创建picturemanagers.yml");
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void loadConfig() {
+		lockList = (Map<String, Boolean>) super.getConfig().get("locklist");
+	}
+
+	private Map<String, Boolean> lockList = Maps.newHashMap();
 	private Map<String, PluginPicturesManager> pictureManagers = Maps.newHashMap();
 	private Map<UUID, PictureEditor> pictureEditors = Maps.newHashMap();
 	private Map<PictureName, Future<PictureInfo>> updateList = Maps.newHashMap();
@@ -108,6 +121,7 @@ public class PicturesManager {
 		}
 		try {
 			this.pictureManagers.put(pluginName, new PluginPicturesManager(pluginName));
+			this.lockList.put(pluginName, true);
 			return true;
 		} catch (ConfigException e) {
 			e.printStackTrace();
@@ -184,8 +198,7 @@ public class PicturesManager {
 	 */
 	public void reloadPictureInfo(String url, String name, String pluginName) {
 		if (!this.firstLoad) {
-			this.updateList.put(new PictureName(name, pluginName),
-					this.pool.submit(new PicturesInfoLoader(url, name, pluginName)));
+			this.updateList.put(new PictureName(name, pluginName), this.pool.submit(new PicturesInfoLoader(url, name, pluginName)));
 			return;
 		}
 		this.waitLoadList.put(new PictureName(name, pluginName), new PicturesInfoLoader(url, name, pluginName));
@@ -251,12 +264,39 @@ public class PicturesManager {
 	public void onDisable() {
 		if (this.task != null)
 			this.task.cancel();
+		try {
+			super.getConfig().set("lockList", this.lockList);
+			super.saveConfig();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void sendUpdateRequest(Player p, String pluginName, String name) {
 		this.pictureEditors.put(p.getUniqueId(), new PictureEditor(p.getUniqueId(), pluginName, name));
 		CocoaUI.getPluginMessageManager().sendPackage(new OutOpenPictureChooser(), p);
 	}
+
+	public Set<String> getPlugins() {
+		Set<String> back = Sets.newHashSet();
+		for (Entry<String, Boolean> entry : this.lockList.entrySet()) {
+			if (entry.getValue()) {
+				back.add(entry.getKey());
+			}
+		}
+		return back;
+	}
+
+	public Set<String> getCustoms() {
+		Set<String> back = Sets.newHashSet();
+		for (Entry<String, Boolean> entry : this.lockList.entrySet()) {
+			if (!entry.getValue()) {
+				back.add(entry.getKey());
+			}
+		}
+		return back;
+	}
+
 }
 
 class PictureName {

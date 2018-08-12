@@ -12,6 +12,7 @@ import net.mcbbs.cocoaui.managers.picturemanager.PicturesManager;
 import net.mcbbs.cocoaui.plugin.CocoaPluginManager;
 import net.mcbbs.cocoaui.pluginmessage.Listener;
 import net.mcbbs.cocoaui.pluginmessage.PluginMessageManager;
+import net.mcbbs.cocoaui.utils.config.ConfigException;
 
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -56,7 +57,11 @@ public class CocoaUI extends JavaPlugin {
 		CocoaUI.log = super.getLogger();
 		CocoaUI.pluginMessageManager = new PluginMessageManager();
 		CocoaUI.commandHandler = new CommandHandler();
-		CocoaUI.picturesManager = new PicturesManager();
+		try {
+			CocoaUI.picturesManager = new PicturesManager();
+		} catch (ConfigException e) {
+			e.printStackTrace();
+		}
 		picturesManager.init();
 		CocoaUI.verifyManager = new VerifyManager();
 

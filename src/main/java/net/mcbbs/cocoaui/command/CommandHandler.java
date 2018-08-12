@@ -3,6 +3,8 @@ package net.mcbbs.cocoaui.command;
 import com.google.common.collect.Maps;
 import net.mcbbs.cocoaui.command.subcommand.HelpCommand;
 import net.mcbbs.cocoaui.command.subcommand.MeCommand;
+import net.mcbbs.cocoaui.command.subcommand.PictureCommand;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -31,8 +33,9 @@ public class CommandHandler implements CommandExecutor {
 	 * Initialize all sub commands
 	 */
 	public CommandHandler() {
-		registerCommand("help", new HelpCommand());
-		registerCommand("me", new MeCommand());
+		this.registerCommand("help", new HelpCommand());
+		this.registerCommand("me", new MeCommand());
+		this.registerCommand("picture", new PictureCommand());
 	}
 
 	/**
@@ -63,7 +66,6 @@ public class CommandHandler implements CommandExecutor {
 		}
 
 		commandMap.get(args[0]).execute(sender, args);
-		;
 
 		return true;
 	}
