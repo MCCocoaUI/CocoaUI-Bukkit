@@ -13,6 +13,7 @@ public abstract class CocoaPlugin extends JavaPlugin {
 		if (CocoaUI.getCocoaPluginManager().contains(pluginName)) {
 			throw new CocoaPluginException("名叫" + this.pluginName + "的插件已经存在了");
 		}
+		CocoaUI.getCocoaPluginManager().registerPlugin(this);
 	}
 	public void onEnable() {
 		CocoaUI.getPicturesManager().registerPlugin(this.pluginName);

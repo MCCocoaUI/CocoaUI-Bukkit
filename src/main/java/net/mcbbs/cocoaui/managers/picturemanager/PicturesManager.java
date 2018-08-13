@@ -2,8 +2,8 @@ package net.mcbbs.cocoaui.managers.picturemanager;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -17,13 +17,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 import net.mcbbs.cocoaui.CocoaUI;
 import net.mcbbs.cocoaui.pluginmessage.packages.OutOpenPictureChooser;
 import net.mcbbs.cocoaui.pluginmessage.packages.OutPictureUpdateSent;
-import net.mcbbs.cocoaui.utils.config.AbstractConfiguration;
 import net.mcbbs.cocoaui.utils.config.ConfigException;
 
 /**
@@ -32,19 +32,7 @@ import net.mcbbs.cocoaui.utils.config.ConfigException;
  * @author ChenJi
  *
  */
-public class PicturesManager extends AbstractConfiguration {
-
-	public PicturesManager() throws ConfigException {
-		super("picturemanagers.yml", false, "成功创建picturemanagers.yml", "无法创建picturemanagers.yml");
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public void loadConfig() {
-		lockList = (Map<String, Boolean>) super.getConfig().get("locklist");
-	}
-
-	private Map<String, Boolean> lockList = Maps.newHashMap();
+public class PicturesManager{
 	private Map<String, PluginPicturesManager> pictureManagers = Maps.newHashMap();
 	private Map<UUID, PictureEditor> pictureEditors = Maps.newHashMap();
 	private Map<PictureName, Future<PictureInfo>> updateList = Maps.newHashMap();
@@ -121,7 +109,6 @@ public class PicturesManager extends AbstractConfiguration {
 		}
 		try {
 			this.pictureManagers.put(pluginName, new PluginPicturesManager(pluginName));
-			this.lockList.put(pluginName, true);
 			return true;
 		} catch (ConfigException e) {
 			e.printStackTrace();
@@ -172,7 +159,6 @@ public class PicturesManager extends AbstractConfiguration {
 	 * @param p 玩家
 	 */
 	public void sendUpdatePackage(Player p) {
-
 		for (PluginPicturesManager manager : pictureManagers.values()) {
 			CocoaUI.getPluginMessageManager().sendPackage(manager.getPackage(), p);
 		}
@@ -196,7 +182,8 @@ public class PicturesManager extends AbstractConfiguration {
 	 * @param name       图片名称
 	 * @param pluginName 所属插件名称
 	 */
-	public void reloadPictureInfo(String url, String name, String pluginName) {
+	public void reloadPictureInfo(String url, String name, String pluginName) 
+	{
 		if (!this.firstLoad) {
 			this.updateList.put(new PictureName(name, pluginName), this.pool.submit(new PicturesInfoLoader(url, name, pluginName)));
 			return;
@@ -262,14 +249,10 @@ public class PicturesManager extends AbstractConfiguration {
 	}
 
 	public void onDisable() {
+		this.save();
 		if (this.task != null)
 			this.task.cancel();
-		try {
-			super.getConfig().set("lockList", this.lockList);
-			super.saveConfig();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.pool.shutdown();
 	}
 
 	public void sendUpdateRequest(Player p, String pluginName, String name) {
@@ -277,24 +260,24 @@ public class PicturesManager extends AbstractConfiguration {
 		CocoaUI.getPluginMessageManager().sendPackage(new OutOpenPictureChooser(), p);
 	}
 
-	public Set<String> getPlugins() {
-		Set<String> back = Sets.newHashSet();
-		for (Entry<String, Boolean> entry : this.lockList.entrySet()) {
-			if (entry.getValue()) {
-				back.add(entry.getKey());
+	public List<String> getPlugins() {
+		List<String> list = Lists.newArrayList();
+		for(String s:this.pictureManagers.keySet()) {
+			if(CocoaUI.getCocoaPluginManager().contains(s)) {
+				list.add(s);
 			}
 		}
-		return back;
+		return list;
 	}
 
-	public Set<String> getCustoms() {
-		Set<String> back = Sets.newHashSet();
-		for (Entry<String, Boolean> entry : this.lockList.entrySet()) {
-			if (!entry.getValue()) {
-				back.add(entry.getKey());
+	public List<String> getCustoms() {
+		List<String> list = Lists.newArrayList();
+		for(String s:this.pictureManagers.keySet()) {
+			if(!CocoaUI.getCocoaPluginManager().contains(s)) {
+				list.add(s);
 			}
 		}
-		return back;
+		return list;
 	}
 
 }

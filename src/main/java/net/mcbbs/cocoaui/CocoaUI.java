@@ -12,15 +12,14 @@ import net.mcbbs.cocoaui.managers.picturemanager.PicturesManager;
 import net.mcbbs.cocoaui.plugin.CocoaPluginManager;
 import net.mcbbs.cocoaui.pluginmessage.Listener;
 import net.mcbbs.cocoaui.pluginmessage.PluginMessageManager;
-import net.mcbbs.cocoaui.utils.config.ConfigException;
-
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CocoaUI extends JavaPlugin {
-	public CocoaUI(){
+	public CocoaUI() {
 		CocoaUI.cocoaPluginManager = new CocoaPluginManager();
 	}
+
 	private static File dataFolder;
 	private static Logger log;
 	private static PluginMessageManager pluginMessageManager;
@@ -36,7 +35,7 @@ public class CocoaUI extends JavaPlugin {
 	}
 
 	public void onDisable() {
-		picturesManager.save();
+		picturesManager.onDisable();
 		verifyManager.onDisable();
 		picturesManager.onDisable();
 	}
@@ -57,11 +56,7 @@ public class CocoaUI extends JavaPlugin {
 		CocoaUI.log = super.getLogger();
 		CocoaUI.pluginMessageManager = new PluginMessageManager();
 		CocoaUI.commandHandler = new CommandHandler();
-		try {
-			CocoaUI.picturesManager = new PicturesManager();
-		} catch (ConfigException e) {
-			e.printStackTrace();
-		}
+		CocoaUI.picturesManager = new PicturesManager();
 		picturesManager.init();
 		CocoaUI.verifyManager = new VerifyManager();
 

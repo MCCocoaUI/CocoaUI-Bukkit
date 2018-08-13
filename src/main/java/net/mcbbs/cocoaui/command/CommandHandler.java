@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.Map;
 
@@ -61,7 +62,7 @@ public class CommandHandler implements CommandExecutor {
 			return true;
 		}
 		if (!commandMap.containsKey(args[0])) {
-			sender.sendMessage("[CocoaUI]§c未知的命令!");
+			StaticPages.sendUnknownCommand((Player)sender,"cui", args);
 			return true;
 		}
 

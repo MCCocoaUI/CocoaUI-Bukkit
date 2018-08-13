@@ -112,6 +112,9 @@ public final class PluginPicturesManager extends AbstractConfiguration {
 	 * @param picture 图片
 	 */
 	public void loadPicture(Picture picture) {
+		if(this.pictures.containsKey(picture.getName())) {
+			return;
+		}
 		this.pictures.put(picture.getName(), picture);
 		CocoaUI.getPicturesManager().reloadPictureInfo(picture.getUrl(), picture.getName(), pluginName);
 	}

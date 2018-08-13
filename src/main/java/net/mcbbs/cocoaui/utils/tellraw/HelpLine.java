@@ -27,6 +27,12 @@ public class HelpLine {
 		text.setHoverEvent(hoverevent);
 	}
 
+	public HelpLine(String message, String hoverevent) {
+		text = new TextComponent(message);
+		text.setBold(true);
+		text.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(hoverevent).create()));
+	}
+
 	public HelpLine(String message, String command, String hoverevent) {
 		text = new TextComponent(message);
 		text.setBold(true);

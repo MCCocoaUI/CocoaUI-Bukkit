@@ -31,8 +31,12 @@ public class CocoaPluginManager {
 			CocoaUI.getPicturesManager().onServerDone();
 		}
 	}
+	public void registerPlugin(CocoaPlugin plugin) {
+		this.plugins.put(plugin.getName(), plugin);
+	}
 
 	public boolean contains(String name) {
+		System.out.println(this.plugins);
 		return this.plugins.containsKey(name);
 	}
 }
