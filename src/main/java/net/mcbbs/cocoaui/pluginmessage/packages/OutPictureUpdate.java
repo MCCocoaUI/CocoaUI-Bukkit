@@ -1,7 +1,11 @@
 package net.mcbbs.cocoaui.pluginmessage.packages;
 
 import net.mcbbs.cocoaui.pluginmessage.AbstractOutPackage;
-
+/**
+ * 图片信息更新包
+ * @author ChenJi
+ *
+ */
 public class OutPictureUpdate extends AbstractOutPackage {
 
     private final static int ID = 2;

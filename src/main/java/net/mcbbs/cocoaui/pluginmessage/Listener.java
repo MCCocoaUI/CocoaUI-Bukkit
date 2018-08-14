@@ -5,6 +5,12 @@ import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import net.mcbbs.cocoaui.CocoaUI;
 
+/**
+ * 监听器标记类
+ * 
+ * @author ChenJi
+ *
+ */
 public class Listener implements PluginMessageListener {
 
     @Override

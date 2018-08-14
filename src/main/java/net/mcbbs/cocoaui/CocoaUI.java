@@ -16,72 +16,71 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CocoaUI extends JavaPlugin {
+	private static File dataFolder;
+	private static Logger log;
+	private static PluginMessageManager pluginMessageManager;
+	private static CommandHandler commandHandler;
+	private static PicturesManager picturesManager;
+	private static VerifyManager verifyManager;
 
-    private static File dataFolder;
-    private static Logger log;
-    private static PluginMessageManager pmm;
-    private static CommandHandler ch;
-    private static PicturesManager pm;
-    private static VerifyManager vm;
+	public void onEnable() {
+		ConfigurationSerialization.registerClass(Picture.class);
+		this.initStatic();
+		this.registerListeners();
+	}
 
-    public void onEnable() {
-        ConfigurationSerialization.registerClass(Picture.class);
-        this.initStatic();
-        this.registerListeners();
-    }
+	public void onDisable() {
+		picturesManager.save();
+		verifyManager.onDisable();
+		picturesManager.onDisable();
+	}
 
-    public void onDisable() {
-        pm.save();
-        vm.onDisable();
-        pm.onDisable();
-    }
+	private void registerListeners() {
+		super.getServer().getMessenger().registerIncomingPluginChannel(this, "CocoaUI", new Listener());
+		super.getServer().getMessenger().registerOutgoingPluginChannel(this, "CocoaUI");
+		super.getCommand("CocoaUI").setExecutor(commandHandler);
+		super.getCommand("cui").setExecutor(commandHandler);
+		new PluginMessageListener();
+		super.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
 
-    private void registerListeners() {
-        super.getServer().getMessenger().registerIncomingPluginChannel(this, "CocoaUI", new Listener());
-        super.getServer().getMessenger().registerOutgoingPluginChannel(this, "CocoaUI");
-        super.getCommand("CocoaUI").setExecutor(ch);
-        super.getCommand("cui").setExecutor(ch);
-        new PluginMessageListener();
-        super.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+	}
 
-    }
+	private void initStatic() {
+		CocoaUI.dataFolder = super.getDataFolder();
+		CocoaUI.log = super.getLogger();
+		CocoaUI.pluginMessageManager = new PluginMessageManager();
+		CocoaUI.commandHandler = new CommandHandler();
+		CocoaUI.picturesManager = new PicturesManager();
+		picturesManager.init();
+		CocoaUI.verifyManager = new VerifyManager();
+	}
 
-    private void initStatic() {
-        CocoaUI.dataFolder = super.getDataFolder();
-        CocoaUI.log = super.getLogger();
-        CocoaUI.pmm = new PluginMessageManager();
-        CocoaUI.ch = new CommandHandler();
-        CocoaUI.pm = new PicturesManager();
-        pm.init();
-        CocoaUI.vm = new VerifyManager();
-    }
+	public static File getKDataFolder() {
+		return CocoaUI.dataFolder;
+	}
 
-    public static File getKDataFolder() {
-        return CocoaUI.dataFolder;
-    }
+	public static Logger getLog() {
+		return CocoaUI.log;
+	}
 
-    public static Logger getLog() {
-        return CocoaUI.log;
-    }
+	public static PluginMessageManager getPluginMessageManager() {
+		return CocoaUI.pluginMessageManager;
+	}
 
-    public static PluginMessageManager getPluginMessageManager() {
-        return CocoaUI.pmm;
-    }
+	public static CommandHandler getCommandHandler() {
+		return CocoaUI.commandHandler;
+	}
 
-    public static CommandHandler getCommandHandler() {
-        return CocoaUI.ch;
-    }
+	public static PicturesManager getPicturesManager() {
+		return CocoaUI.picturesManager;
+	}
 
-    public static PicturesManager getPicturesManager() {
-        return CocoaUI.pm;
-    }
+	public static VerifyManager getVerfiyManager() {
+		return CocoaUI.verifyManager;
+	}
 
-    public static VerifyManager getVerfiyManager() {
-        return CocoaUI.vm;
-    }
-
-    public static boolean isFinish() {
-        return pm.isFinish();
-    }
+	public static boolean isFinish() {
+		return picturesManager.isFinish();
+	}
 
 }

@@ -2,7 +2,11 @@ package net.mcbbs.cocoaui.pluginmessage.packages;
 
 import net.mcbbs.cocoaui.pluginmessage.AbstractInPackage;
 import org.bukkit.entity.Player;
-
+/**
+ * 验证接收包
+ * @author ChenJi
+ *
+ */
 public class InVerifyPackage extends AbstractInPackage {
 
     private final static int ID = 1;

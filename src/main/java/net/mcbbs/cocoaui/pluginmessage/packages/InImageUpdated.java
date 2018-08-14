@@ -5,9 +5,9 @@ import org.bukkit.entity.Player;
 import net.mcbbs.cocoaui.pluginmessage.AbstractInPackage;
 
 /**
- * 数据结构 <int> id<br>
- * <String> url<br>
- * <String> name<br>
+ * 图片更新结果接收包
+ * @author ChenJi
+ *
  */
 public class InImageUpdated extends AbstractInPackage {
 
