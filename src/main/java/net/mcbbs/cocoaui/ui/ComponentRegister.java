@@ -56,7 +56,8 @@ public interface ComponentRegister {
         com.setY(json.get("Y").getAsInt());
         com.setWeigth(json.get("Weigth").getAsInt());
         com.setLength(json.get("Length").getAsInt());
-        if(this.hasChild() && json.has("Child")){
+        com.setUID(json.get("UID").getAsInt());
+        if (this.hasChild() && json.has("Child")) {
             JsonArray ja = json.getAsJsonArray("Child");
             com.setChild(ComponentManager.loadChilds(ja));
         }

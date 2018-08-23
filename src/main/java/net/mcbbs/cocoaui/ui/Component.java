@@ -16,6 +16,7 @@
  */
 package net.mcbbs.cocoaui.ui;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.util.List;
 
@@ -26,10 +27,17 @@ import java.util.List;
  * @since 2018-8-20
  */
 public abstract class Component {
+    
+    private static int LastComponentUID = 0;
 
     protected String Name;
     protected int X, Y, Weigth, Length;
+    protected int UID;
     protected List<Component> Child;
+
+    public Component() {
+        this.UID = ++LastComponentUID;
+    }
 
     /**
      * 返回对应的json对象<p>
@@ -37,7 +45,24 @@ public abstract class Component {
      *
      * @return 对应的json对象
      */
-    public abstract JsonObject toJson();
+    protected abstract JsonObject toJson();
+    
+    public JsonObject toFullJson(){
+        JsonObject json = toJson();
+        json.addProperty("X", this.X);
+        json.addProperty("Y", this.Y);
+        json.addProperty("Weigth", this.Weigth);
+        json.addProperty("Length", this.Length);
+        json.addProperty("UID", this.UID);
+        if(Child != null && this.hasChild() && ComponentManager.getComponentRegister(this.getName()).hasChild()){
+            JsonArray arr = new JsonArray();
+            for (Component c : Child) {
+                arr.add(c.toFullJson());
+            }
+            json.add("Child", arr);
+        }
+        return json;
+    }
 
     /**
      * 设置关键属性值<p>
@@ -107,6 +132,14 @@ public abstract class Component {
 
     public void setChild(List<Component> Child) {
         this.Child = Child;
+    }
+
+    public int getUID() {
+        return UID;
+    }
+
+    void setUID(int UID) {
+        this.UID = UID;
     }
     
 

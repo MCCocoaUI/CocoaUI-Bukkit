@@ -35,6 +35,20 @@ public class ComponentManager {
     private static final Map<String, ComponentRegister> COMPONENT_REGISTERS = new HashMap<>();
     private static final Map<Class<? extends Component>, String> COMPONENT_CLASSES = new HashMap<>();
     private static final ComponentRegister UNKNOW_COMPONENT_REGISTER = new UnknowComponet.UnknowComponetRegister();
+    
+    static{
+        RegisterComponentRegister(UNKNOW_COMPONENT_REGISTER);
+    }
+    
+    public static void RegisterComponentRegister(ComponentRegister cr){
+        COMPONENT_REGISTERS.put(cr.getType(), cr);
+        COMPONENT_CLASSES.put(cr.getComponentClass(), cr.getType());
+    }
+    
+    public static ComponentRegister getComponentRegister(Class<? extends Component> c){
+        String s = COMPONENT_CLASSES.get(c);
+        return COMPONENT_REGISTERS.get(s);
+    }
 
     public static List<Component> loadChilds(JsonArray json) {
         List<Component> list = new ArrayList<>();
@@ -57,3 +71,4 @@ public class ComponentManager {
     }
     
 }
+ 
