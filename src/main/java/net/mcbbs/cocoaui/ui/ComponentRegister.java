@@ -43,7 +43,7 @@ public interface ComponentRegister {
 
     /**
      * 从json中解析组件数据<p>
-     * 注意 不需要解析X Y Weigth Length Child等属性
+     * 注意 不需要解析X Y Weigth Length Child Visible等属性
      *
      * @param g json
      * @return 组件
@@ -54,9 +54,10 @@ public interface ComponentRegister {
         Component com = this.deJson(json);
         com.setX(json.get("X").getAsInt());
         com.setY(json.get("Y").getAsInt());
-        com.setWeigth(json.get("Weigth").getAsInt());
+        com.setWidth(json.get("Width").getAsInt());
         com.setLength(json.get("Length").getAsInt());
         com.setUID(json.get("UID").getAsInt());
+        com.setVisible(json.get("Visible").getAsBoolean());
         if (this.hasChild() && json.has("Child")) {
             JsonArray ja = json.getAsJsonArray("Child");
             com.setChild(ComponentManager.loadChilds(ja));

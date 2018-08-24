@@ -16,6 +16,7 @@
  */
 package net.mcbbs.cocoaui.ui;
 
+import net.mcbbs.cocoaui.ui.components.UnknowComponet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

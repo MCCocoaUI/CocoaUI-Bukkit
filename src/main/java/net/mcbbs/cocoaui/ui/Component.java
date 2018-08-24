@@ -17,6 +17,7 @@
 package net.mcbbs.cocoaui.ui;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import java.util.List;
 
@@ -31,9 +32,10 @@ public abstract class Component {
     private static int LastComponentUID = 0;
 
     protected String Name;
-    protected int X, Y, Weigth, Length;
+    protected int X, Y, Width, Length;
     protected int UID;
     protected List<Component> Child;
+    protected boolean Visible = false;
 
     public Component() {
         this.UID = ++LastComponentUID;
@@ -41,7 +43,7 @@ public abstract class Component {
 
     /**
      * 返回对应的json对象<p>
-     * 注意 不需要写入X Y Weigth Length Child等属性
+     * 注意 不需要写入X Y Weigth Length Child Visible等属性
      *
      * @return 对应的json对象
      */
@@ -51,9 +53,10 @@ public abstract class Component {
         JsonObject json = toJson();
         json.addProperty("X", this.X);
         json.addProperty("Y", this.Y);
-        json.addProperty("Weigth", this.Weigth);
+        json.addProperty("Width", this.Width);
         json.addProperty("Length", this.Length);
         json.addProperty("UID", this.UID);
+        json.addProperty("Visible", this.Visible);
         if(Child != null && this.hasChild() && ComponentManager.getComponentRegister(this.getName()).hasChild()){
             JsonArray arr = new JsonArray();
             for (Component c : Child) {
@@ -71,7 +74,7 @@ public abstract class Component {
      * @param key
      * @param value
      */
-    public abstract void set(String key, Object value);
+    public abstract void set(String key, JsonElement value);
 
     /**
      * 获取关键属性值<p>
@@ -80,7 +83,7 @@ public abstract class Component {
      * @param key
      * @return
      */
-    public abstract <T> T get(String key);
+    public abstract <T extends JsonElement> T get(String key);
 
     public boolean hasChild() {
         return this.Child != null;
@@ -102,12 +105,12 @@ public abstract class Component {
         this.Y = Y;
     }
 
-    public int getWeigth() {
-        return Weigth;
+    public int getWidth() {
+        return Width;
     }
 
-    public void setWeigth(int Weigth) {
-        this.Weigth = Weigth;
+    public void setWidth(int Width) {
+        this.Width = Width;
     }
 
     public int getLength() {
@@ -140,6 +143,14 @@ public abstract class Component {
 
     void setUID(int UID) {
         this.UID = UID;
+    }
+
+    public boolean isVisible() {
+        return Visible;
+    }
+
+    public void setVisible(boolean Visible) {
+        this.Visible = Visible;
     }
     
 

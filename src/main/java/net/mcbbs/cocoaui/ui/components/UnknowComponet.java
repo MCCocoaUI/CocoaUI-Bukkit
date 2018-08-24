@@ -14,13 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.mcbbs.cocoaui.ui;
+package net.mcbbs.cocoaui.ui.components;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import net.mcbbs.cocoaui.ui.Component;
+import net.mcbbs.cocoaui.ui.ComponentRegister;
 
 /**
  *
@@ -30,21 +35,25 @@ import java.util.Map;
  */
 public class UnknowComponet extends Component {
 
-    private Map<String, Object> Values = new HashMap<>();
+    private Map<String, JsonElement> Values = new HashMap<>();
+    private static Set<String> KEEP_KEY = new HashSet<>(Arrays.asList("Name", "X", "Y", "Width", "Length", "UID", "Visible", "Child"));
 
     public UnknowComponet() {
     }
-    
-    
 
     public UnknowComponet(JsonObject json) {
         super.Name = json.get("Name").getAsString();
+        for (Map.Entry<String, JsonElement> e : json.entrySet()) {
+            if(!KEEP_KEY.contains(e.getKey())){
+                Values.put(e.getKey(), e.getValue());
+            }
+        }
     }
 
     @Override
     public JsonObject toJson() {
         JsonObject json = new JsonObject();
-        for (Map.Entry<String, Object> e : Values.entrySet()) {
+        for (Map.Entry<String, JsonElement> e : Values.entrySet()) {
             Object value = e.getValue();
             if (value instanceof JsonElement) {
                 json.add(e.getKey(), (JsonElement) value);
@@ -67,18 +76,16 @@ public class UnknowComponet extends Component {
     }
 
     @Override
-    public void set(String key, Object value) {
+    public void set(String key, JsonElement value) {
         Values.put(key, value);
     }
 
     @Override
-    public <T> T get(String key) {
+    public <T extends JsonElement> T get(String key) {
         return (T) Values.get(key);
     }
-    
-    
-    
-    public static final class UnknowComponetRegister implements ComponentRegister{
+
+    public static final class UnknowComponetRegister implements ComponentRegister {
 
         @Override
         public String getType() {
@@ -114,7 +121,7 @@ public class UnknowComponet extends Component {
         public Class<? extends Component> getComponentClass() {
             return UnknowComponet.class;
         }
-        
+
     }
 
 }
