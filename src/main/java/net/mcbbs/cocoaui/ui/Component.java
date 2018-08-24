@@ -69,21 +69,21 @@ public abstract class Component {
 
     /**
      * 设置关键属性值<p>
-     * 注 本方法用于兼容组件未注册的情况
+     * <strong>注 本方法用于兼容组件未注册的情况</strong>
      *
      * @param key
      * @param value
      */
-    public abstract void set(String key, JsonElement value);
+    public abstract void setElement(String key, JsonElement value);
 
     /**
      * 获取关键属性值<p>
-     * 注 本方法用于兼容组件未注册的情况
+     * <strong>注 本方法用于兼容组件未注册的情况</strong>
      * @param <T>
      * @param key
      * @return
      */
-    public abstract <T extends JsonElement> T get(String key);
+    public abstract <T extends JsonElement> T getElement(String key);
 
     public boolean hasChild() {
         return this.Child != null;

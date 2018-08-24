@@ -76,12 +76,12 @@ public class UnknowComponet extends Component {
     }
 
     @Override
-    public void set(String key, JsonElement value) {
+    public void setElement(String key, JsonElement value) {
         Values.put(key, value);
     }
 
     @Override
-    public <T extends JsonElement> T get(String key) {
+    public <T extends JsonElement> T getElement(String key) {
         return (T) Values.get(key);
     }
 
