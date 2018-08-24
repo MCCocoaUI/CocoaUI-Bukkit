@@ -45,7 +45,7 @@ public final class NMSUtils {
 
     /**
      * 取服务器版本 如 v1_10_R1
-     * <br />
+     * <br>
      * get the server version, returns a string similar to v1_10_R1
      *
      * @return server version
@@ -56,7 +56,7 @@ public final class NMSUtils {
 
     /**
      * 取 org.bukkit.craftbukkit 包下的类对象
-     * <br />
+     * <br>
      * get org.bukkit.craftbukkit's class object
      *
      * @param className a class's name in the package obc
@@ -73,7 +73,7 @@ public final class NMSUtils {
 
     /**
      * 取物品的 NMS 对象
-     * <br />
+     * <br>
      * get a item's nms object
      *
      * @param itemStack a itemStack object
@@ -103,7 +103,7 @@ public final class NMSUtils {
 
     /**
      * 取对应的 NMS 下的类
-     * <br />
+     * <br>
      * get net.minecraft.server's class object
      *
      * @param className a class's name in the package nms
@@ -120,7 +120,7 @@ public final class NMSUtils {
 
     /**
      * 给一名玩家发送 NMS 数据包
-     * <br />
+     * <br>
      * send a NMS packet to a player
      *
      * @param player player object
@@ -159,7 +159,7 @@ public final class NMSUtils {
 
     /**
      * 取玩家的 NMS 对象
-     * <br />
+     * <br>
      * get a player's nms object
      *
      * @param player player object

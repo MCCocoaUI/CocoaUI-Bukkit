@@ -183,7 +183,7 @@ public final class PluginPicturesManager extends AbstractConfiguration {
 	/**
 	 * 发送更新包
 	 *
-	 * @param 图片信息
+	 * @param name 图片信息
 	 */
 	public void update(String name) {
 		if (this.picturechanges.containsKey(name)) {
