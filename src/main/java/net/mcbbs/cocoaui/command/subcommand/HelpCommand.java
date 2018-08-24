@@ -11,12 +11,12 @@ import org.bukkit.entity.Player;
  */
 public class HelpCommand implements SubCommand {
 
-	@Override
-	public void execute(CommandSender sender, String[] args) {
-		StaticPages.MainPage.show((Player)sender);
-	}
+    @Override
+    public void execute(CommandSender sender, String[] args) {
+        StaticPages.MainPage.show((Player) sender);
+    }
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-	}
+    }
 }

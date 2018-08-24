@@ -28,7 +28,7 @@ import java.util.List;
  * @since 2018-8-20
  */
 public abstract class Component {
-    
+
     private static int LastComponentUID = 0;
 
     protected String Name;
@@ -48,8 +48,8 @@ public abstract class Component {
      * @return 对应的json对象
      */
     protected abstract JsonObject toJson();
-    
-    public JsonObject toFullJson(){
+
+    public JsonObject toFullJson() {
         JsonObject json = toJson();
         json.addProperty("X", this.X);
         json.addProperty("Y", this.Y);
@@ -57,7 +57,7 @@ public abstract class Component {
         json.addProperty("Length", this.Length);
         json.addProperty("UID", this.UID);
         json.addProperty("Visible", this.Visible);
-        if(Child != null && this.hasChild() && ComponentManager.getComponentRegister(this.getName()).hasChild()){
+        if (Child != null && this.hasChild() && ComponentManager.getComponentRegister(this.getName()).hasChild()) {
             JsonArray arr = new JsonArray();
             for (Component c : Child) {
                 arr.add(c.toFullJson());
@@ -79,6 +79,7 @@ public abstract class Component {
     /**
      * 获取关键属性值<p>
      * <strong>注 本方法用于兼容组件未注册的情况</strong>
+     *
      * @param <T>
      * @param key
      * @return
@@ -152,7 +153,5 @@ public abstract class Component {
     public void setVisible(boolean Visible) {
         this.Visible = Visible;
     }
-    
 
-    
 }

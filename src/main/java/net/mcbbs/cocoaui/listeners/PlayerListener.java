@@ -9,14 +9,14 @@ import net.mcbbs.cocoaui.CocoaUI;
 
 public class PlayerListener implements Listener {
 
-	@EventHandler
-	public void onPlayerJoin(PlayerJoinEvent e) {
-		CocoaUI.getVerfiyManager().verifyPlayer(e.getPlayer());
-	}
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent e) {
+        CocoaUI.getVerfiyManager().verifyPlayer(e.getPlayer());
+    }
 
-	@EventHandler
-	public void onPlayerJoin(PluginEnableEvent e) {
-		CocoaUI.getCocoaPluginManager().onPluginEnable(e.getPlugin().getName());
-	}
+    @EventHandler
+    public void onPlayerJoin(PluginEnableEvent e) {
+        CocoaUI.getCocoaPluginManager().onPluginEnable(e.getPlugin().getName());
+    }
 
 }

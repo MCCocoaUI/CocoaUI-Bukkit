@@ -44,7 +44,7 @@ public class UnknowComponet extends Component {
     public UnknowComponet(JsonObject json) {
         super.Name = json.get("Name").getAsString();
         for (Map.Entry<String, JsonElement> e : json.entrySet()) {
-            if(!KEEP_KEY.contains(e.getKey())){
+            if (!KEEP_KEY.contains(e.getKey())) {
                 Values.put(e.getKey(), e.getValue());
             }
         }

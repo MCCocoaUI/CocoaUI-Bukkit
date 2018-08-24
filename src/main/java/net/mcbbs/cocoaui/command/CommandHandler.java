@@ -23,51 +23,51 @@ import java.util.Map;
  */
 public class CommandHandler implements CommandExecutor {
 
-	/**
-	 * 对应关系: 子命令名 -> 子命令实现类
-	 */
-	private Map<String, SubCommand> commandMap = Maps.newHashMap();
+    /**
+     * 对应关系: 子命令名 -> 子命令实现类
+     */
+    private Map<String, SubCommand> commandMap = Maps.newHashMap();
 
-	/**
-	 * 初始化所有子命令
-	 * <p>
-	 * Initialize all sub commands
-	 */
-	public CommandHandler() {
-		this.registerCommand("help", new HelpCommand());
-		this.registerCommand("me", new MeCommand());
-		this.registerCommand("picture", new PictureCommand());
-	}
+    /**
+     * 初始化所有子命令
+     * <p>
+     * Initialize all sub commands
+     */
+    public CommandHandler() {
+        this.registerCommand("help", new HelpCommand());
+        this.registerCommand("me", new MeCommand());
+        this.registerCommand("picture", new PictureCommand());
+    }
 
-	/**
-	 * 用于注册子命令
-	 * <p>
-	 * Used to register SubCommand
-	 *
-	 * @param commandName 子命令名
-	 * @param subCommand  子命令实现类
-	 */
-	private void registerCommand(String commandName, SubCommand subCommand) {
-		if (commandMap.containsKey(commandName)) {
-			Bukkit.getLogger().warning("duplicate add command!");
-		}
-		commandMap.put(commandName, subCommand);
-	}
+    /**
+     * 用于注册子命令
+     * <p>
+     * Used to register SubCommand
+     *
+     * @param commandName 子命令名
+     * @param subCommand 子命令实现类
+     */
+    private void registerCommand(String commandName, SubCommand subCommand) {
+        if (commandMap.containsKey(commandName)) {
+            Bukkit.getLogger().warning("duplicate add command!");
+        }
+        commandMap.put(commandName, subCommand);
+    }
 
-	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		// 默认返回help子命令的内容
-		if (args.length == 0) {
-			commandMap.get("help").execute(sender, args);
-			return true;
-		}
-		if (!commandMap.containsKey(args[0])) {
-			StaticPages.sendUnknownCommand((Player)sender,"cui", args);
-			return true;
-		}
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        // 默认返回help子命令的内容
+        if (args.length == 0) {
+            commandMap.get("help").execute(sender, args);
+            return true;
+        }
+        if (!commandMap.containsKey(args[0])) {
+            StaticPages.sendUnknownCommand((Player) sender, "cui", args);
+            return true;
+        }
 
-		commandMap.get(args[0]).execute(sender, args);
+        commandMap.get(args[0]).execute(sender, args);
 
-		return true;
-	}
+        return true;
+    }
 }

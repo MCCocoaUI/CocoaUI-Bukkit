@@ -6,39 +6,39 @@ import net.mcbbs.cocoaui.pluginmessage.AbstractOutPackage;
 
 public class PackageSendEvent {
 
-	boolean isCancelled = false;
-	AbstractOutPackage pack;
-	Player p;
-	int id;
+    boolean isCancelled = false;
+    AbstractOutPackage pack;
+    Player p;
+    int id;
 
-	public PackageSendEvent(AbstractOutPackage a) {
-		this.pack = a;
-		this.id = a.getID();
-	}
+    public PackageSendEvent(AbstractOutPackage a) {
+        this.pack = a;
+        this.id = a.getID();
+    }
 
-	public PackageSendEvent(AbstractOutPackage out, Player p) {
-		this.p = p;
-		this.pack = out;
-	}
+    public PackageSendEvent(AbstractOutPackage out, Player p) {
+        this.p = p;
+        this.pack = out;
+    }
 
-	public void setCancelled(boolean arg) {
-		this.isCancelled = arg;
-	}
+    public void setCancelled(boolean arg) {
+        this.isCancelled = arg;
+    }
 
-	public boolean isCancelled() {
-		return this.isCancelled;
-	}
+    public boolean isCancelled() {
+        return this.isCancelled;
+    }
 
-	public int getID() {
-		return this.id;
-	}
+    public int getID() {
+        return this.id;
+    }
 
-	public Player getPlayer() {
-		return this.p;
-	}
+    public Player getPlayer() {
+        return this.p;
+    }
 
-	public AbstractOutPackage getPackage() {
-		return pack;
-	}
+    public AbstractOutPackage getPackage() {
+        return pack;
+    }
 
 }

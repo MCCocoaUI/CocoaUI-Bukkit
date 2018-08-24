@@ -5,26 +5,26 @@ import org.bukkit.entity.Player;
 
 /**
  * 验证接收包
- * 
+ *
  * @author ChenJi
  *
  */
 public class InVerifyPackage extends AbstractInPackage {
 
-	private final static int ID = 1;
-	private String version;
+    private final static int ID = 1;
+    private String version;
 
-	public InVerifyPackage(byte[] data, Player sender) {
-		super(data, sender, ID);
-		this.readData();
-	}
+    public InVerifyPackage(byte[] data, Player sender) {
+        super(data, sender, ID);
+        this.readData();
+    }
 
-	private void readData() {
-		this.version = super.getByteArrayDataInput().readUTF();
-	}
+    private void readData() {
+        this.version = super.getByteArrayDataInput().readUTF();
+    }
 
-	public String getVersion() {
-		return this.version;
-	}
+    public String getVersion() {
+        return this.version;
+    }
 
 }

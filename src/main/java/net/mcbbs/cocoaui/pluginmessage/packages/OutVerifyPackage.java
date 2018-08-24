@@ -4,7 +4,7 @@ import net.mcbbs.cocoaui.pluginmessage.AbstractOutPackage;
 
 /**
  * 验证请求包
- * 
+ *
  * @author ChenJi
  *
  */
