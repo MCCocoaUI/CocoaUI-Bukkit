@@ -45,7 +45,7 @@ public class LableComponet extends Component {
     public void setElement(String key, JsonElement value) {
         if ("Text".equalsIgnoreCase(key)) {
             if (!value.isJsonPrimitive()) {
-                throw new IllegalArgumentException("Text属性必须为");
+                throw new IllegalArgumentException("Text属性必须为JsonPrimitive");
             }
             if (!value.getAsJsonPrimitive().isString()) {
                 throw new IllegalArgumentException("Text属性必须为String");
