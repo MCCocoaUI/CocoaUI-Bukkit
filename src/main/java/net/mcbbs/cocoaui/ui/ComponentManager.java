@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import net.mcbbs.cocoaui.ui.components.LableComponet.LableComponetRegister;
 
 /**
  *
@@ -38,10 +39,11 @@ public class ComponentManager {
     private static final ComponentRegister UNKNOW_COMPONENT_REGISTER = new UnknowComponet.UnknowComponetRegister();
 
     static {
-        RegisterComponentRegister(UNKNOW_COMPONENT_REGISTER);
+        registerComponentRegister(UNKNOW_COMPONENT_REGISTER);
+        registerComponentRegister(new LableComponetRegister());
     }
 
-    public static void RegisterComponentRegister(ComponentRegister cr) {
+    public static void registerComponentRegister(ComponentRegister cr) {
         COMPONENT_REGISTERS.put(cr.getType(), cr);
         COMPONENT_CLASSES.put(cr.getComponentClass(), cr.getType());
     }

@@ -32,7 +32,7 @@ public abstract class Component {
     private static int LastComponentUID = 0;
 
     protected String Name;
-    protected int X, Y, Width, Length;
+    protected String X, Y, Width, Length;
     protected int UID;
     protected List<Component> Child;
     protected boolean Visible = false;
@@ -90,35 +90,35 @@ public abstract class Component {
         return this.Child != null;
     }
 
-    public int getX() {
+    public String getX() {
         return X;
     }
 
-    public void setX(int X) {
+    public void setX(String X) {
         this.X = X;
     }
 
-    public int getY() {
+    public String getY() {
         return Y;
     }
 
-    public void setY(int Y) {
+    public void setY(String Y) {
         this.Y = Y;
     }
 
-    public int getWidth() {
+    public String getWidth() {
         return Width;
     }
 
-    public void setWidth(int Width) {
+    public void setWidth(String Width) {
         this.Width = Width;
     }
 
-    public int getLength() {
+    public String getLength() {
         return Length;
     }
 
-    public void setLength(int Length) {
+    public void setLength(String Length) {
         this.Length = Length;
     }
 

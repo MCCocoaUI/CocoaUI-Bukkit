@@ -52,10 +52,10 @@ public interface ComponentRegister {
 
     default Component deFullJson(JsonObject json) {
         Component com = this.deJson(json);
-        com.setX(json.get("X").getAsInt());
-        com.setY(json.get("Y").getAsInt());
-        com.setWidth(json.get("Width").getAsInt());
-        com.setLength(json.get("Length").getAsInt());
+        com.setX(json.get("X").getAsString());
+        com.setY(json.get("Y").getAsString());
+        com.setWidth(json.get("Width").getAsString());
+        com.setLength(json.get("Length").getAsString());
         com.setUID(json.get("UID").getAsInt());
         com.setVisible(json.get("Visible").getAsBoolean());
         if (this.hasChild() && json.has("Child")) {
