@@ -1,7 +1,7 @@
 package net.mcbbs.cocoaui.pluginmessage.packages;
 
-import net.mcbbs.cocoaui.managers.picturemanager.Picture;
 import net.mcbbs.cocoaui.pluginmessage.AbstractOutPackage;
+import net.mcbbs.cocoaui.resource.Resource;
 
 /**
  * 单个图片更新包
@@ -9,15 +9,15 @@ import net.mcbbs.cocoaui.pluginmessage.AbstractOutPackage;
  * @author ChenJi
  *
  */
-public class OutSinglePictureUpdate extends AbstractOutPackage {
+public class OutSingleResourceUpdate extends AbstractOutPackage {
 
     private final static int ID = 3;
-    private Picture pic;
+    private Resource pic;
     private String plname;
     private int state;
 
 //  1-update 2-rename 3-remove
-    public OutSinglePictureUpdate(String plname, Picture pic, int state) {
+    public OutSingleResourceUpdate(String plname, Resource pic, int state) {
         super(ID);
         this.pic = pic;
         this.plname = plname;

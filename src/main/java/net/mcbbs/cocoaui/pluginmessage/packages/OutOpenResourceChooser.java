@@ -2,11 +2,11 @@ package net.mcbbs.cocoaui.pluginmessage.packages;
 
 import net.mcbbs.cocoaui.pluginmessage.AbstractOutPackage;
 
-public class OutOpenPictureChooser extends AbstractOutPackage {
+public class OutOpenResourceChooser extends AbstractOutPackage {
 
     private static final int ID = 5;
 
-    public OutOpenPictureChooser() {
+    public OutOpenResourceChooser() {
         super(ID);
     }
 

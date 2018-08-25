@@ -8,11 +8,11 @@ import net.mcbbs.cocoaui.pluginmessage.AbstractOutPackage;
  * @author ChenJi
  *
  */
-public class OutPictureUpdateSent extends AbstractOutPackage {
+public class OutResourceUpdateSent extends AbstractOutPackage {
 
     public static final int ID = 4;
 
-    public OutPictureUpdateSent() {
+    public OutResourceUpdateSent() {
         super(ID);
     }
 }

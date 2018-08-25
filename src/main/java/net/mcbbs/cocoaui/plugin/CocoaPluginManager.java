@@ -29,7 +29,7 @@ public class CocoaPluginManager {
             this.allPlugins.remove(name);
         }
         if (this.allPlugins.isEmpty()) {
-            CocoaUI.getPicturesManager().onServerDone();
+            CocoaUI.getResourcesManager().onServerDone();
         }
     }
 

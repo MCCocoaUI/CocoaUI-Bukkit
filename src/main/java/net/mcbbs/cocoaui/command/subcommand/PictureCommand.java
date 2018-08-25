@@ -62,7 +62,7 @@ public class PictureCommand implements SubCommand {
     }
 
     private void listPlugins(Player p, int page, boolean isPlugin) {
-        List<String> list = (isPlugin ? CocoaUI.getPicturesManager().getPlugins() : CocoaUI.getPicturesManager().getCustoms());
+        List<String> list = (isPlugin ? CocoaUI.getResourcesManager().getPlugins() : CocoaUI.getResourcesManager().getCustoms());
         System.out.println(list);
         if (list.size() == 0) {
             StaticPages.noContent.show(p);

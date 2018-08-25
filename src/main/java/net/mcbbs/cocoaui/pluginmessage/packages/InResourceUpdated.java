@@ -10,13 +10,13 @@ import net.mcbbs.cocoaui.pluginmessage.AbstractInPackage;
  * @author ChenJi
  *
  */
-public class InImageUpdated extends AbstractInPackage {
+public class InResourceUpdated extends AbstractInPackage {
 
     private String url;
     private String name;
     private Player p;
 
-    public InImageUpdated(byte[] data, Player sender, int id) {
+    public InResourceUpdated(byte[] data, Player sender, int id) {
         super(data, sender, id);
         this.readData();
     }

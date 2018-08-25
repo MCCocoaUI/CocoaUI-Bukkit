@@ -1,4 +1,4 @@
-package net.mcbbs.cocoaui.managers.picturemanager;
+package net.mcbbs.cocoaui.resource;
 
 /**
  * 图片信息回传记录类 内部使用
@@ -6,9 +6,9 @@ package net.mcbbs.cocoaui.managers.picturemanager;
  * @author ChenJi
  *
  */
-public class PictureInfo {
+public class ResourceInfo {
 
-    public PictureInfo(String url, String md5, int width, int height, String name, String pluginName) {
+    public ResourceInfo(String url, String md5, int width, int height, String name, String pluginName) {
         super();
         this.url = url;
         this.md5 = md5;

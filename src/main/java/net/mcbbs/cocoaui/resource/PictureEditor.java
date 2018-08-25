@@ -1,4 +1,4 @@
-package net.mcbbs.cocoaui.managers.picturemanager;
+package net.mcbbs.cocoaui.resource;
 
 import java.util.UUID;
 

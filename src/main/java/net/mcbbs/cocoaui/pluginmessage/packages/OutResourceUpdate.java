@@ -8,12 +8,12 @@ import net.mcbbs.cocoaui.pluginmessage.AbstractOutPackage;
  * @author ChenJi
  *
  */
-public class OutPictureUpdate extends AbstractOutPackage {
+public class OutResourceUpdate extends AbstractOutPackage {
 
     private final static int ID = 2;
     private String json;
 
-    public OutPictureUpdate(String string) {
+    public OutResourceUpdate(String string) {
         super(ID);
         this.json = string;
         this.writeData();

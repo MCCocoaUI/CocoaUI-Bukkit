@@ -54,7 +54,8 @@ public class LableComponet extends Component {
         }
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public <T extends JsonElement> T getElement(String key) {
         if ("Text".equalsIgnoreCase(key)) {
             return (T) this.Text;

@@ -3,7 +3,7 @@ package net.mcbbs.cocoaui.plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.mcbbs.cocoaui.CocoaUI;
-import net.mcbbs.cocoaui.managers.picturemanager.PluginPicturesManager;
+import net.mcbbs.cocoaui.resource.PluginResourcesManager;
 
 public abstract class CocoaPlugin extends JavaPlugin {
 
@@ -18,14 +18,14 @@ public abstract class CocoaPlugin extends JavaPlugin {
     }
 
     public void onEnable() {
-        CocoaUI.getPicturesManager().registerPlugin(this.pluginName);
+        CocoaUI.getResourcesManager().registerPlugin(this.pluginName);
     }
 
     public final String getPluginName() {
         return this.pluginName;
     }
 
-    public PluginPicturesManager getPluginPicturesManager() {
-        return CocoaUI.getPicturesManager().getPluginPictureManager(this.pluginName);
+    public PluginResourcesManager getPluginPicturesManager() {
+        return CocoaUI.getResourcesManager().getPluginResourceManager(this.pluginName);
     }
 }
