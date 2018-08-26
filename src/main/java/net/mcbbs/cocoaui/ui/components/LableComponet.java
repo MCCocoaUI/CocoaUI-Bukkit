@@ -55,7 +55,7 @@ public class LableComponet extends Component {
     }
 
     @SuppressWarnings("unchecked")
-	@Override
+    @Override
     public <T extends JsonElement> T getElement(String key) {
         if ("Text".equalsIgnoreCase(key)) {
             return (T) this.Text;
@@ -69,6 +69,11 @@ public class LableComponet extends Component {
 
     public String getText() {
         return this.Text == null ? null : this.Text.getAsString();
+    }
+
+    @Override
+    public boolean hasChild() {
+        return false;
     }
 
     public static class LableComponetRegister implements ComponentRegister {

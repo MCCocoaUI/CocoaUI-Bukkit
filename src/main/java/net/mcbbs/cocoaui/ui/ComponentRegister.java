@@ -27,65 +27,66 @@ import com.google.gson.JsonObject;
  */
 public interface ComponentRegister {
 
-	/**
-	 *
-	 * @return 组件类型
-	 */
-	String getType();
+    /**
+     *
+     * @return 组件类型
+     */
+    String getType();
 
-	/**
-	 * 创建一个空的组件
-	 *
-	 * @return 空的组件
-	 */
-	Component createComponent();
+    /**
+     * 创建一个空的组件
+     *
+     * @return 空的组件
+     */
+    Component createComponent();
 
-	/**
-	 * 从json中解析组件数据
-	 * <p>
-	 * 注意 不需要解析X Y Weigth Length Child Visible等属性
-	 *
-	 * @param g json
-	 * @return 组件
-	 */
-	Component deJson(JsonObject g);
+    /**
+     * 从json中解析组件数据
+     * <p>
+     * 注意 不需要解析X Y Weigth Length Child Visible等属性
+     *
+     * @param g json
+     * @return 组件
+     */
+    Component deJson(JsonObject g);
 
-	default Component deFullJson(JsonObject json) {
-		Component com = this.deJson(json);
-		com.setX(json.get("X").getAsString());
-		com.setY(json.get("Y").getAsString());
-		com.setWidth(json.get("Width").getAsString());
-		com.setLength(json.get("Length").getAsString());
-		com.setUID(json.get("UID").getAsInt());
-		com.setVisible(json.get("Visible").getAsBoolean());
-		if (this.hasChild() && json.has("Child")) {
-			JsonArray ja = json.getAsJsonArray("Child");
-			com.setChild(ComponentManager.loadChilds(ja));
-		}
-		return com;
-	}
+    default Component deFullJson(JsonObject json) {
+        Component com = this.deJson(json);
+        com.setX(json.get("X").getAsString());
+        com.setY(json.get("Y").getAsString());
+        com.setWidth(json.get("Width").getAsString());
+        com.setLength(json.get("Length").getAsString());
+        com.setUID(json.get("UID").getAsInt());
+        com.setVisible(json.get("Visible").getAsBoolean());
+        if (com instanceof ContainerComponent && this.hasChild() && json.has("Child")) {
+            ContainerComponent cc = (ContainerComponent) com;
+            JsonArray ja = json.getAsJsonArray("Child");
+            cc.setChild(ComponentManager.loadChilds(ja));
+        }
+        return com;
+    }
 
-	/**
-	 *
-	 * @return 组件的必要参数
-	 */
-	String[] getNecessaryArgs();
+    /**
+     *
+     * @return 组件的必要参数
+     */
+    String[] getNecessaryArgs();
 
-	/**
-	 *
-	 * @return 组件的可选参数
-	 */
-	String[] getOptionalArgs();
+    /**
+     *
+     * @return 组件的可选参数
+     */
+    String[] getOptionalArgs();
 
-	/**
-	 *
-	 * @return 是否有子组件
-	 */
-	boolean hasChild();
+    /**
+     *
+     * @return 是否有子组件
+     */
+    boolean hasChild();
 
-	/**
-	 *
-	 * @return 控件类
-	 */
-	Class<? extends Component> getComponentClass();
+    /**
+     *
+     * @return 控件类
+     */
+    Class<? extends Component> getComponentClass();
 }

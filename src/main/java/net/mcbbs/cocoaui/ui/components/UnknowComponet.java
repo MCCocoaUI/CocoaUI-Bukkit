@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Set;
 import net.mcbbs.cocoaui.ui.Component;
 import net.mcbbs.cocoaui.ui.ComponentRegister;
+import net.mcbbs.cocoaui.ui.ContainerComponent;
 
 /**
  *
@@ -33,96 +34,95 @@ import net.mcbbs.cocoaui.ui.ComponentRegister;
  * @version 1.0
  * @since 2018-8-22
  */
-public class UnknowComponet extends Component {
+public class UnknowComponet extends ContainerComponent {
 
-	private Map<String, JsonElement> Values = new HashMap<>();
-	private static Set<String> KEEP_KEY = new HashSet<>(Arrays.asList("Name", "X", "Y", "Width", "Length", "UID", "Visible", "Child"));
+    private Map<String, JsonElement> Values = new HashMap<>();
+    private static Set<String> KEEP_KEY = new HashSet<>(Arrays.asList("Name", "X", "Y", "Width", "Length", "UID", "Visible", "Child"));
 
-	public UnknowComponet() {
-	}
+    public UnknowComponet() {
+    }
 
-	public UnknowComponet(JsonObject json) {
-		super.Name = json.get("Name").getAsString();
-		for (Map.Entry<String, JsonElement> e : json.entrySet()) {
-			if (!KEEP_KEY.contains(e.getKey())) {
-				Values.put(e.getKey(), e.getValue());
-			}
-		}
-	}
+    public UnknowComponet(JsonObject json) {
+        super.Name = json.get("Name").getAsString();
+        for (Map.Entry<String, JsonElement> e : json.entrySet()) {
+            if (!KEEP_KEY.contains(e.getKey())) {
+                Values.put(e.getKey(), e.getValue());
+            }
+        }
+    }
 
-	@Override
-	public JsonObject toJson() {
-		JsonObject json = new JsonObject();
-		for (Map.Entry<String, JsonElement> e : Values.entrySet()) {
-			Object value = e.getValue();
-			if (value instanceof JsonElement) {
-				json.add(e.getKey(), (JsonElement) value);
-			}
-			JsonElement v = null;
-			if (value instanceof String) {
-				v = new JsonPrimitive((String) value);
-			} else if (value instanceof Number) {
-				v = new JsonPrimitive((Number) value);
-			} else if (value instanceof Character) {
-				v = new JsonPrimitive((Character) value);
-			} else if (value instanceof Boolean) {
-				v = new JsonPrimitive((Boolean) value);
-			}
-			if (v != null) {
-				json.add(e.getKey(), v);
-			}
-		}
-		return json;
-	}
+    @Override
+    public JsonObject toJson() {
+        JsonObject json = new JsonObject();
+        for (Map.Entry<String, JsonElement> e : Values.entrySet()) {
+            Object value = e.getValue();
+            if (value instanceof JsonElement) {
+                json.add(e.getKey(), (JsonElement) value);
+            }
+            JsonElement v = null;
+            if (value instanceof String) {
+                v = new JsonPrimitive((String) value);
+            } else if (value instanceof Number) {
+                v = new JsonPrimitive((Number) value);
+            } else if (value instanceof Character) {
+                v = new JsonPrimitive((Character) value);
+            } else if (value instanceof Boolean) {
+                v = new JsonPrimitive((Boolean) value);
+            }
+            if (v != null) {
+                json.add(e.getKey(), v);
+            }
+        }
+        return json;
+    }
 
-	@Override
-	public void setElement(String key, JsonElement value) {
-		Values.put(key, value);
-	}
+    @Override
+    public void setElement(String key, JsonElement value) {
+        Values.put(key, value);
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T extends JsonElement> T getElement(String key) {
-		return (T) Values.get(key);
-	}
+    @Override
+    public <T extends JsonElement> T getElement(String key) {
+        return (T) Values.get(key);
+    }
 
-	public static final class UnknowComponetRegister implements ComponentRegister {
+    public static final class UnknowComponetRegister implements ComponentRegister {
 
-		@Override
-		public String getType() {
-			return "Unknow";
-		}
+        @Override
+        public String getType() {
+            return "Unknow";
+        }
 
-		@Override
-		public Component createComponent() {
-			return new UnknowComponet();
-		}
+        @Override
+        public Component createComponent() {
+            return new UnknowComponet();
+        }
 
-		@Override
-		public Component deJson(JsonObject g) {
-			return new UnknowComponet(g);
-		}
+        @Override
+        public Component deJson(JsonObject g) {
+            return new UnknowComponet(g);
+        }
 
-		@Override
-		public String[] getNecessaryArgs() {
-			return new String[] {};
-		}
+        @Override
+        public String[] getNecessaryArgs() {
+            return new String[]{};
+        }
 
-		@Override
-		public String[] getOptionalArgs() {
-			return new String[] {};
-		}
+        @Override
+        public String[] getOptionalArgs() {
+            return new String[]{};
+        }
 
-		@Override
-		public boolean hasChild() {
-			return true;
-		}
+        @Override
+        public boolean hasChild() {
+            return true;
+        }
 
-		@Override
-		public Class<? extends Component> getComponentClass() {
-			return UnknowComponet.class;
-		}
+        @Override
+        public Class<? extends Component> getComponentClass() {
+            return UnknowComponet.class;
+        }
 
-	}
+    }
 
 }

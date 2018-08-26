@@ -34,7 +34,6 @@ public abstract class Component {
     protected String Name;
     protected String X, Y, Width, Length;
     protected int UID;
-    protected List<Component> Child;
     protected boolean Visible = false;
 
     public Component() {
@@ -57,13 +56,6 @@ public abstract class Component {
         json.addProperty("Length", this.Length);
         json.addProperty("UID", this.UID);
         json.addProperty("Visible", this.Visible);
-        if (Child != null && this.hasChild() && ComponentManager.getComponentRegister(this.getName()).hasChild()) {
-            JsonArray arr = new JsonArray();
-            for (Component c : Child) {
-                arr.add(c.toFullJson());
-            }
-            json.add("Child", arr);
-        }
         return json;
     }
 
@@ -86,9 +78,7 @@ public abstract class Component {
      */
     public abstract <T extends JsonElement> T getElement(String key);
 
-    public boolean hasChild() {
-        return this.Child != null;
-    }
+    public abstract boolean hasChild();
 
     public String getX() {
         return X;
@@ -128,14 +118,6 @@ public abstract class Component {
 
     public void setName(String Name) {
         this.Name = Name;
-    }
-
-    public List<Component> getChild() {
-        return Child;
-    }
-
-    public void setChild(List<Component> Child) {
-        this.Child = Child;
     }
 
     public int getUID() {
