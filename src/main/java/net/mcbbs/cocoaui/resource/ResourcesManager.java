@@ -91,10 +91,10 @@ public class ResourcesManager {
 		PluginResourcesManager pl = this.resourceManagers.get(pluginName);
 		if (pl != null) {
 			if (pl.contains(name)) {
-			Resource res = pl.getResource(name);
-			if (res.getType() != ResourceType.PICTURE) {
-				return false;
-			}
+				Resource res = pl.getResource(name);
+				if (res.getType() != ResourceType.PICTURE) {
+					return false;
+				}
 				this.resourceEditors.put(p.getUniqueId(), new PictureEditor(p.getUniqueId(), pluginName, name));
 				return true;
 			}
@@ -122,6 +122,20 @@ public class ResourcesManager {
 	}
 
 	/**
+	 * 获取资源，不存在时返回null
+	 * 
+	 * @param pluginName 资源所属插件的名称
+	 * @param resname    资源名称
+	 * @return
+	 */
+	public Resource getResource(String pluginName, String resname) {
+		if (this.resourceManagers.containsKey(pluginName)) {
+			return this.resourceManagers.get(pluginName).getResource(resname);
+		}
+		return null;
+	}
+
+	/**
 	 * 根据插件名称获取插件资源管理器
 	 *
 	 * @param name 插件名
@@ -132,7 +146,11 @@ public class ResourcesManager {
 	}
 
 	private void loadManagers() {
-		File f = new File(CocoaUI.getKDataFolder() + "/picconfig/");
+		File f = new File(CocoaUI.getKDataFolder() + "/resources/");
+		if (!f.exists()) {
+			f.mkdirs();
+		}
+
 		for (File file : f.listFiles(new FileFilter() {
 			@Override
 			public boolean accept(File arg0) {
@@ -148,7 +166,7 @@ public class ResourcesManager {
 		this.loadManager(name.substring(0, name.length() - 4));
 
 	}
-
+	
 	private void loadManager(String name) {
 		try {
 			PluginResourcesManager manager = new PluginResourcesManager(name);

@@ -54,12 +54,16 @@ public class CocoaUI extends JavaPlugin {
     private void initStatic() {
 
         CocoaUI.dataFolder = super.getDataFolder();
+        if(CocoaUI.dataFolder.exists()) {
+        	CocoaUI.dataFolder.mkdirs();
+        }
         CocoaUI.log = super.getLogger();
         CocoaUI.pluginMessageManager = new PluginMessageManager();
         CocoaUI.commandHandler = new CommandHandler();
         CocoaUI.resourcesManager = new ResourcesManager();
         resourcesManager.init();
         CocoaUI.verifyManager = new VerifyManager();
+       
 
     }
 

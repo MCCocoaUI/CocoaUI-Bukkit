@@ -32,7 +32,7 @@ public final class PluginResourcesManager extends AbstractConfiguration {
 	private String pluginName;
 
 	public PluginResourcesManager(String pluginName) throws ConfigException {
-		super("picconfig/" + pluginName + ".yml", false, "pluginName.yml created", "cannot create resoucres.yml");
+		super("resources/" + pluginName + ".yml", false, "pluginName.yml created", "cannot create resoucres.yml");
 		this.pluginName = pluginName;
 		CocoaUI.getLog().info("[PictureManager]正在加載 " + pluginName);
 
@@ -53,7 +53,7 @@ public final class PluginResourcesManager extends AbstractConfiguration {
 		}
 	}
 
-	public void addSet(String name, ResourceType type) {
+	private void addSet(String name, ResourceType type) {
 		switch (type) {
 		case VIDEO:
 			this.videoSet.add(name);
@@ -70,7 +70,7 @@ public final class PluginResourcesManager extends AbstractConfiguration {
 		}
 	}
 
-	public void removeSet(String name, ResourceType type) {
+	private void removeSet(String name, ResourceType type) {
 		switch (type) {
 		case VIDEO:
 			this.videoSet.remove(name);
@@ -156,7 +156,7 @@ public final class PluginResourcesManager extends AbstractConfiguration {
 	 *
 	 * @param resource 资源
 	 */
-	public void loadResource(Resource resource) {
+	protected void forceLoadResource(Resource resource) {
 		if (this.resoucres.containsKey(resource.getName())) {
 			return;
 		}
@@ -232,7 +232,7 @@ public final class PluginResourcesManager extends AbstractConfiguration {
 	 *
 	 * @param name 资源信息
 	 */
-	public void update(String name) {
+	protected void update(String name) {
 		if (this.resourcechanges.containsKey(name)) {
 			if (this.resoucres.containsKey(name)) {
 				Resource pic = this.resoucres.get(name);
@@ -242,7 +242,7 @@ public final class PluginResourcesManager extends AbstractConfiguration {
 		}
 	}
 
-	void updateInfo(String name, ResourceInfo value) {
+	protected void updateInfo(String name, ResourceInfo value) {
 		if (this.resoucres.containsKey(name)) {
 			if (this.resourcechanges.containsKey(name)) {
 				this.update(name);
@@ -258,7 +258,7 @@ public final class PluginResourcesManager extends AbstractConfiguration {
 	 * @param resource resource
 	 * @return 是否含有重复的
 	 */
-	public boolean loadPictureFromPlugin(Resource resource) {
+	public boolean loadResource(Resource resource) {
 		if (this.resoucres.containsKey(resource.getName())) {
 			return false;
 		}

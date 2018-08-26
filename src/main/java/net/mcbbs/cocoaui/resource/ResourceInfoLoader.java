@@ -52,7 +52,7 @@ public class ResourceInfoLoader implements Callable<ResourceInfo> {
 		if (this.isPicture) {
 			this.loadSize();
 		}
-
+		System.out.println("Resource " + this.name + " loaded:" + this.md5);
 		return new ResourceInfo(this.url, this.md5, this.width, this.height, this.name, pluginName);
 	}
 
