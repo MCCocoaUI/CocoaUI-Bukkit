@@ -15,7 +15,7 @@ import com.google.common.collect.Lists;
  */
 public class ItemBuilder extends ItemStack implements ConfigurationSerializable {
 
-    ItemMeta meta = this.getItemMeta();
+    private ItemMeta meta = this.getItemMeta();
 
     public ItemBuilder(Material material) {
         super(material);

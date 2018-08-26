@@ -14,18 +14,14 @@ import net.mcbbs.cocoaui.pluginmessage.packages.OutVerifyPackage;
 
 public class VerifyManager {
 
-    Map<UUID, Integer> verifylist = Maps.newHashMap();
-    BukkitTask task;
+    private Map<UUID, Integer> verifyList = Maps.newHashMap();
+    private BukkitTask task;
     boolean forceUseMod;
 
     public void verifyPlayer(Player p) {
-        Bukkit.getScheduler().runTaskLater(CocoaUI.getPlugin(CocoaUI.class), new Runnable() {
-            @Override
-            public void run() {
-                verifylist.put(p.getUniqueId(), 0);
-                CocoaUI.getPluginMessageManager().sendPackage(new OutVerifyPackage(), p);
-
-            }
+        Bukkit.getScheduler().runTaskLater(CocoaUI.getPlugin(CocoaUI.class), () -> {
+            verifyList.put(p.getUniqueId(), 0);
+            CocoaUI.getPluginMessageManager().sendPackage(new OutVerifyPackage(), p);
         }, 10);
 
     }
@@ -39,31 +35,25 @@ public class VerifyManager {
     }
 
     public void receiveVerify(Player p) {
-        this.verifylist.remove(p.getUniqueId());
+        this.verifyList.remove(p.getUniqueId());
     }
 
     private void start() {
-        task = Bukkit.getScheduler().runTaskTimer(CocoaUI.getPlugin(CocoaUI.class), new Runnable() {
-            @Override
-            public void run() {
-                task();
-
-            }
-        }, 20L, 20L);
+        task = Bukkit.getScheduler().runTaskTimer(CocoaUI.getPlugin(CocoaUI.class), () -> task(), 20L, 20L);
     }
 
     private void task() {
-        for (UUID uuid : verifylist.keySet()) {
-            int i = this.verifylist.get(uuid);
+        for (UUID uuid : verifyList.keySet()) {
+            int i = this.verifyList.get(uuid);
             if (i++ > 5) {
                 if (this.forceUseMod) {
                     if (Bukkit.getPlayer(uuid) != null) {
                         Bukkit.getPlayer(uuid).kickPlayer("Please install CocoaUI mod");
                     }
                 }
-                this.verifylist.remove(uuid);
+                this.verifyList.remove(uuid);
             } else {
-                this.verifylist.put(uuid, i);
+                this.verifyList.put(uuid, i);
             }
         }
     }

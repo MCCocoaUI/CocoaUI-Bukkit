@@ -5,7 +5,7 @@ import net.mcbbs.cocoaui.CocoaUI;
 public class CocoaPluginException extends Exception {
 
     private static final long serialVersionUID = 6347718687625763341L;
-    String Message;
+    private String Message;
 
     public CocoaPluginException(String Message) {
         this.Message = Message;

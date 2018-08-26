@@ -21,7 +21,7 @@ public class Resource implements ConfigurationSerializable, Cloneable {
     private static final String LOCK = "lock";
     private static final String HEIGHT = "height";
     private static final String WIDTH = "width";
-    private static final String DEFAULTURL = "DEFAULTURL";
+    private static final String DEFAULT_URL = "DEFAULT_URL";
     private static final String MD5 = "md5";
     private static final String TYPE = "type";
     private String name;
@@ -46,7 +46,7 @@ public class Resource implements ConfigurationSerializable, Cloneable {
         this.lock = (boolean) obj.get(LOCK);
         this.height = (int) obj.get(HEIGHT);
         this.width = (int) obj.get(WIDTH);
-        this.defaultURL = (String) obj.get(DEFAULTURL);
+        this.defaultURL = (String) obj.get(DEFAULT_URL);
         this.md5 = (String) obj.get(MD5);
         this.type = ResourceType.toResourceType((String) obj.get(TYPE));
 
@@ -241,9 +241,9 @@ public class Resource implements ConfigurationSerializable, Cloneable {
      * @param info
      */
     public void setInfo(ResourceInfo info) {
-        this.md5 = info.md5;
-        this.width = info.width;
-        this.height = info.width;
+        this.md5 = info.getMd5();
+        this.width = info.getWidth();
+        this.height = info.getHeight();
     }
 
     /**

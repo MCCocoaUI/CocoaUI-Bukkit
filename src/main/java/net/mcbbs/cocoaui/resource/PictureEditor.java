@@ -16,9 +16,9 @@ public class PictureEditor {
         this.name = name;
     }
 
-    UUID p;
-    String pluginName;
-    String name;
+    private UUID p;
+    private String pluginName;
+    private String name;
 
     public UUID getPlayer() {
         return p;

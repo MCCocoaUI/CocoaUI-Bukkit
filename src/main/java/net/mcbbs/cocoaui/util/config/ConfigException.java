@@ -6,8 +6,8 @@ import net.mcbbs.cocoaui.CocoaUI;
 
 public class ConfigException extends Exception {
 
-    String Message;
-    Exception e;
+    private String Message;
+    private Exception e;
 
     private static final long serialVersionUID = -3125946766812234248L;
 

@@ -23,16 +23,16 @@ import net.mcbbs.cocoaui.util.config.ConfigException;
  */
 public final class PluginResourcesManager extends AbstractConfiguration {
 
-    private Map<String, Resource> resoucres = Maps.newHashMap();
-    private Map<String, ResourceChange> resourcechanges = Maps.newHashMap();
+    private Map<String, Resource> resources = Maps.newHashMap();
+    private Map<String, ResourceChange> resourceChanges = Maps.newHashMap();
     private Set<String> picSet = Sets.newHashSet();
     private Set<String> fontSet = Sets.newHashSet();
     private Set<String> videoSet = Sets.newHashSet();
-    private Set<String> musicset = Sets.newHashSet();
+    private Set<String> musicSet = Sets.newHashSet();
     private String pluginName;
 
     public PluginResourcesManager(String pluginName) throws ConfigException {
-        super("resources/" + pluginName + ".yml", false, "pluginName.yml created", "cannot create resoucres.yml");
+        super("resources/" + pluginName + ".yml", false, "pluginName.yml created", "cannot create resources.yml");
         this.pluginName = pluginName;
         CocoaUI.getLog().info("[PictureManager]正在加載 " + pluginName);
 
@@ -46,7 +46,7 @@ public final class PluginResourcesManager extends AbstractConfiguration {
     public void loadConfig() {
         for (String name : super.getConfig().getKeys(false)) {
             Resource resource = (Resource) super.getConfig().get(name);
-            this.resoucres.put(resource.getName(), resource);
+            this.resources.put(resource.getName(), resource);
             this.addSet(resource.getName(), resource.getType());
             this.check(resource);
 
@@ -59,7 +59,7 @@ public final class PluginResourcesManager extends AbstractConfiguration {
                 this.videoSet.add(name);
                 return;
             case MUSIC:
-                this.musicset.add(name);
+                this.musicSet.add(name);
                 return;
             case PICTURE:
                 this.picSet.add(name);
@@ -76,7 +76,7 @@ public final class PluginResourcesManager extends AbstractConfiguration {
                 this.videoSet.remove(name);
                 return;
             case MUSIC:
-                this.musicset.remove(name);
+                this.musicSet.remove(name);
                 return;
             case PICTURE:
                 this.picSet.remove(name);
@@ -103,11 +103,11 @@ public final class PluginResourcesManager extends AbstractConfiguration {
      * @return 是否成功，资源未找到则返回false
      */
     public boolean setURL(String name, String url) {
-        if (this.resoucres.containsKey(name)) {
-            Resource res = this.resoucres.get(name);
+        if (this.resources.containsKey(name)) {
+            Resource res = this.resources.get(name);
             res.setUrl(url);
             CocoaUI.getResourcesManager().reloadResourceInfo(url, name, pluginName, res.getType().equals(ResourceType.PICTURE));
-            this.resourcechanges.put(name, new ResourceChange(ResourceChange.SETURL, name, null));
+            this.resourceChanges.put(name, new ResourceChange(ResourceChange.SETURL, name, null));
 
             return true;
         }
@@ -121,10 +121,10 @@ public final class PluginResourcesManager extends AbstractConfiguration {
      * @return 是否成功，资源未找到则返回false
      */
     public boolean removeResource(String name) {
-        if (this.resoucres.containsKey(name)) {
-            this.removeSet(name, this.resoucres.get(name).getType());
-            this.resoucres.remove(name);
-            this.resourcechanges.put(name, new ResourceChange(ResourceChange.REMOVE, name, null));
+        if (this.resources.containsKey(name)) {
+            this.removeSet(name, this.resources.get(name).getType());
+            this.resources.remove(name);
+            this.resourceChanges.put(name, new ResourceChange(ResourceChange.REMOVE, name, null));
             this.update(name);
 
             return true;
@@ -139,16 +139,7 @@ public final class PluginResourcesManager extends AbstractConfiguration {
      * @return 资源
      */
     public Resource getResource(String name) {
-        return this.resoucres.get(name);
-    }
-
-    /**
-     * 获取这个管理器所属的插件名称
-     *
-     * @return 插件名称
-     */
-    public String getpluginName() {
-        return this.pluginName;
+        return this.resources.get(name);
     }
 
     /**
@@ -157,10 +148,10 @@ public final class PluginResourcesManager extends AbstractConfiguration {
      * @param resource 资源
      */
     protected void forceLoadResource(Resource resource) {
-        if (this.resoucres.containsKey(resource.getName())) {
+        if (this.resources.containsKey(resource.getName())) {
             return;
         }
-        this.resoucres.put(resource.getName(), resource);
+        this.resources.put(resource.getName(), resource);
         this.addSet(resource.getName(), resource.getType());
         CocoaUI.getResourcesManager().reloadResourceInfo(resource.getUrl(), resource.getName(), pluginName, resource.getType().equals(ResourceType.PICTURE));
     }
@@ -172,7 +163,7 @@ public final class PluginResourcesManager extends AbstractConfiguration {
      * @return 是否存在
      */
     public boolean contains(String name) {
-        return this.resoucres.containsKey(name);
+        return this.resources.containsKey(name);
     }
 
     private Map<String, String> getPictureData(Resource p) {
@@ -191,12 +182,12 @@ public final class PluginResourcesManager extends AbstractConfiguration {
      */
     public OutResourceUpdate getPackage() {
         Map<String, Map<String, String>> content = Maps.newHashMap();
-        for (Resource pic : this.resoucres.values()) {
+        for (Resource pic : this.resources.values()) {
             content.put(pic.getName(), this.getPictureData(pic));
         }
         Map<String, Object> back = Maps.newHashMap();
-        back.put("pluginName", this.getpluginName());
-        back.put("picAmount", this.resoucres.size());
+        back.put("pluginName", this.getPluginName());
+        back.put("picAmount", this.resources.size());
         back.put("content", content);
         return new OutResourceUpdate(new Gson().toJson(back));
     }
@@ -205,7 +196,7 @@ public final class PluginResourcesManager extends AbstractConfiguration {
      * 保存
      */
     public void save() {
-        for (Resource pic : this.resoucres.values()) {
+        for (Resource pic : this.resources.values()) {
             super.getConfig().set(pic.getName(), pic);
         }
         try {
@@ -223,7 +214,7 @@ public final class PluginResourcesManager extends AbstractConfiguration {
      * @return OutSinglePictureUpdate
      */
     public OutSingleResourceUpdate getUpdatePackage(String name, Resource p) {
-        ResourceChange chenge = this.resourcechanges.get(name);
+        ResourceChange chenge = this.resourceChanges.get(name);
         return new OutSingleResourceUpdate(this.pluginName, p, chenge.state);
     }
 
@@ -233,9 +224,9 @@ public final class PluginResourcesManager extends AbstractConfiguration {
      * @param name 资源信息
      */
     protected void update(String name) {
-        if (this.resourcechanges.containsKey(name)) {
-            if (this.resoucres.containsKey(name)) {
-                Resource pic = this.resoucres.get(name);
+        if (this.resourceChanges.containsKey(name)) {
+            if (this.resources.containsKey(name)) {
+                Resource pic = this.resources.get(name);
                 OutSingleResourceUpdate pack = this.getUpdatePackage(name, pic);
                 CocoaUI.getPluginMessageManager().sendAll(pack);
             }
@@ -243,11 +234,11 @@ public final class PluginResourcesManager extends AbstractConfiguration {
     }
 
     protected void updateInfo(String name, ResourceInfo value) {
-        if (this.resoucres.containsKey(name)) {
-            if (this.resourcechanges.containsKey(name)) {
+        if (this.resources.containsKey(name)) {
+            if (this.resourceChanges.containsKey(name)) {
                 this.update(name);
             }
-            this.resoucres.get(name).setInfo(value);
+            this.resources.get(name).setInfo(value);
         }
 
     }
@@ -259,10 +250,10 @@ public final class PluginResourcesManager extends AbstractConfiguration {
      * @return 是否含有重复的
      */
     public boolean loadResource(Resource resource) {
-        if (this.resoucres.containsKey(resource.getName())) {
+        if (this.resources.containsKey(resource.getName())) {
             return false;
         }
-        this.resoucres.put(resource.getName(), resource);
+        this.resources.put(resource.getName(), resource);
         this.addSet(resource.getName(), resource.getType());
         return true;
     }
@@ -272,8 +263,8 @@ public final class PluginResourcesManager extends AbstractConfiguration {
      *
      * @return
      */
-    public Collection<Resource> getResoucres() {
-        return resoucres.values();
+    public Collection<Resource> getResources() {
+        return resources.values();
     }
 
     /**
@@ -308,8 +299,8 @@ public final class PluginResourcesManager extends AbstractConfiguration {
      *
      * @return
      */
-    public Set<String> getMusicset() {
-        return musicset;
+    public Set<String> getMusicSet() {
+        return musicSet;
     }
 
     /**

@@ -7,7 +7,7 @@ import net.mcbbs.cocoaui.resource.PluginResourcesManager;
 
 public abstract class CocoaPlugin extends JavaPlugin {
 
-    String pluginName;
+    private String pluginName;
 
     public CocoaPlugin(String pluginName) throws CocoaPluginException {
         this.pluginName = pluginName;
