@@ -9,9 +9,8 @@ public class MD5Tool {
 
     public static String md5(byte[] data) {
         try {
-            MessageDigest messdig;
-            messdig = MessageDigest.getInstance("MD5");
-            byte[] result = messdig.digest(data);
+            MessageDigest messageDigest=MessageDigest.getInstance("MD5");
+            byte[] result = messageDigest.digest(data);
             return new HexBinaryAdapter().marshal(result);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();

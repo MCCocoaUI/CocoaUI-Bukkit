@@ -31,21 +31,21 @@ public class HelpPage implements Cloneable {
     public HelpPage(String title) {
         char[] chars = title.toCharArray();
         int length = title.length();
-        int chinesechar = 0;
+        int chineseChar = 0;
         for (char c : chars) {
             if (c == '§') {
                 length = length - 2;
             }
             if ((c >= 0x4e00) && (c <= 0x9fbb)) {
                 length++;
-                chinesechar++;
+                chineseChar++;
             }
         }
-        if (chinesechar != 0) {
-            length = length + chinesechar / 3;
+        if (chineseChar != 0) {
+            length = length + chineseChar / 3;
         }
-        String finalup = UP.substring(0, UP.length() - (length / 2));
-        head = finalup + " §c" + title + " " + finalup;
+        String finalUp = UP.substring(0, UP.length() - (length / 2));
+        head = finalUp + " §c" + title + " " + finalUp;
     }
 
     public HelpPage addLine(HelpLine l) {
@@ -65,15 +65,15 @@ public class HelpPage implements Cloneable {
     }
 
     public void increase(int loc, String message) {
-        int nowloc = 0;
+        int nowLoc = 0;
         LinkedHashSet<HelpLine> set = Sets.newLinkedHashSet();
-        HelpLine forincrease = new HelpLine(message);
+        HelpLine forIncrease = new HelpLine(message);
         for (HelpLine hl : this.set) {
             set.add(hl);
-            if (loc == nowloc) {
-                set.add(forincrease);
+            if (loc == nowLoc) {
+                set.add(forIncrease);
             }
-            nowloc++;
+            nowLoc++;
         }
         this.set = set;
     }

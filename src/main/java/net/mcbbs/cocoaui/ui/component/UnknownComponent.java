@@ -34,15 +34,15 @@ import net.mcbbs.cocoaui.ui.ContainerComponent;
  * @version 1.0
  * @since 2018-8-22
  */
-public class UnknowComponet extends ContainerComponent {
+public class UnknownComponent extends ContainerComponent {
 
     private Map<String, JsonElement> Values = new HashMap<>();
     private static Set<String> KEEP_KEY = new HashSet<>(Arrays.asList("Name", "X", "Y", "Width", "Length", "UID", "Visible", "Child"));
 
-    public UnknowComponet() {
+    public UnknownComponent() {
     }
 
-    public UnknowComponet(JsonObject json) {
+    public UnknownComponent(JsonObject json) {
         super.Name = json.get("Name").getAsString();
         for (Map.Entry<String, JsonElement> e : json.entrySet()) {
             if (!KEEP_KEY.contains(e.getKey())) {
@@ -86,21 +86,21 @@ public class UnknowComponet extends ContainerComponent {
         return (T) Values.get(key);
     }
 
-    public static final class UnknowComponetRegister implements ComponentRegister {
+    public static final class UnknownComponetRegister implements ComponentRegister {
 
         @Override
         public String getType() {
-            return "Unknow";
+            return "Unknown";
         }
 
         @Override
         public Component createComponent() {
-            return new UnknowComponet();
+            return new UnknownComponent();
         }
 
         @Override
         public Component deJson(JsonObject g) {
-            return new UnknowComponet(g);
+            return new UnknownComponent(g);
         }
 
         @Override
@@ -120,7 +120,7 @@ public class UnknowComponet extends ContainerComponent {
 
         @Override
         public Class<? extends Component> getComponentClass() {
-            return UnknowComponet.class;
+            return UnknownComponent.class;
         }
 
     }

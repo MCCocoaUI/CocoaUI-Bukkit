@@ -28,7 +28,7 @@ import net.mcbbs.cocoaui.ui.ComponentRegister;
  * @version 1.0
  * @since 2018-8-25
  */
-public class LableComponet extends Component {
+public class LabelComponent extends Component {
 
     private JsonElement Text;
 
@@ -76,21 +76,21 @@ public class LableComponet extends Component {
         return false;
     }
 
-    public static class LableComponetRegister implements ComponentRegister {
+    public static class LabelComponentRegister implements ComponentRegister {
 
         @Override
         public String getType() {
-            return "Lable";
+            return "Label";
         }
 
         @Override
-        public LableComponet createComponent() {
-            return new LableComponet();
+        public LabelComponent createComponent() {
+            return new LabelComponent();
         }
 
         @Override
         public Component deJson(JsonObject g) {
-            LableComponet com = this.createComponent();
+            LabelComponent com = this.createComponent();
             if (g.has("Text")) {
                 com.setTest(g.get("Text").getAsString());
             }
@@ -114,7 +114,7 @@ public class LableComponet extends Component {
 
         @Override
         public Class<? extends Component> getComponentClass() {
-            return LableComponet.class;
+            return LabelComponent.class;
         }
 
     }

@@ -25,7 +25,7 @@ public abstract class AbstractConfiguration {
     private static File DataFile = CocoaUI.getKDataFolder();
     private String ConfigName;
     private FileConfiguration config = new KConfiguration();
-    private File configfile;
+    private File configFile;
 
     public FileConfiguration getConfig() {
         return this.config;
@@ -40,20 +40,20 @@ public abstract class AbstractConfiguration {
     public AbstractConfiguration(String ConfigName, boolean rewrite, String create, String cannotCreate)
             throws ConfigException {
         this.ConfigName = ConfigName;
-        this.configfile = new File(DataFile + "/" + ConfigName);
+        this.configFile = new File(DataFile + "/" + ConfigName);
 
         if (!(AbstractConfiguration.DataFile.exists())) {
             AbstractConfiguration.DataFile.mkdirs();
             Maps.newConcurrentMap();
         }
 
-        if (!(this.configfile.exists())) {
-            File file = this.configfile.getParentFile();
+        if (!(this.configFile.exists())) {
+            File file = this.configFile.getParentFile();
             if (file != null && !file.exists()) {
                 file.mkdirs();
             }
             try {
-                this.configfile.createNewFile();
+                this.configFile.createNewFile();
                 if (rewrite) {
                     saveDefaultConfig();
                 }
@@ -65,7 +65,7 @@ public abstract class AbstractConfiguration {
 
         try {
             try {
-                FileInputStream stream = new FileInputStream(this.configfile);
+                FileInputStream stream = new FileInputStream(this.configFile);
                 InputStreamReader isr = new InputStreamReader(stream, Charsets.UTF_8);
                 this.config.load(isr);
             } catch (FileNotFoundException e) {
@@ -76,12 +76,12 @@ public abstract class AbstractConfiguration {
 
         } catch (InvalidConfigurationException e) {
             CocoaUI.getLog().warning("错误，无法读取" + ConfigName + ".yml 请注意格式。已经重新生成。");
-            this.configfile.renameTo(new File(DataFile + "/" + ConfigName + ".break"));
+            this.configFile.renameTo(new File(DataFile + "/" + ConfigName + ".break"));
             if (rewrite) {
                 saveDefaultConfig();
             } else {
                 try {
-                    this.configfile.createNewFile();
+                    this.configFile.createNewFile();
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -94,15 +94,15 @@ public abstract class AbstractConfiguration {
     public abstract void loadConfig();
 
     public final void saveConfig() throws IOException {
-        this.config.save(this.configfile);
+        this.config.save(this.configFile);
     }
 
     public final File saveFile(File file, InputStreamReader isr) throws ConfigException {
         OutputStreamWriter out = null;
-        FileOutputStream fileout = null;
+        FileOutputStream fileOut = null;
         try {
-            fileout = new FileOutputStream(file);
-            out = new OutputStreamWriter(fileout, Charsets.UTF_8);
+            fileOut = new FileOutputStream(file);
+            out = new OutputStreamWriter(fileOut, Charsets.UTF_8);
             char buffer[] = new char[4 * 1024];
             int len = 0;
             while ((len = isr.read(buffer)) != -1) {
@@ -113,8 +113,8 @@ public abstract class AbstractConfiguration {
             throw new ConfigException(e, "无法保存默认的配置文件：" + ConfigName);
         } finally {
             try {
-                if (fileout != null) {
-                    fileout.close();
+                if (fileOut != null) {
+                    fileOut.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -147,7 +147,7 @@ public abstract class AbstractConfiguration {
             connection.setUseCaches(false);
             i = connection.getInputStream();
             InputStreamReader isr = new InputStreamReader(i, Charsets.UTF_8);
-            saveFile(this.configfile, isr);
+            saveFile(this.configFile, isr);
 
             this.saveConfig();
 
