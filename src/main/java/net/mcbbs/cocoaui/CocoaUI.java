@@ -4,9 +4,9 @@ import java.io.File;
 import java.util.logging.Logger;
 
 import net.mcbbs.cocoaui.command.CommandHandler;
-import net.mcbbs.cocoaui.listeners.PlayerListener;
-import net.mcbbs.cocoaui.listeners.PluginMessageListener;
-import net.mcbbs.cocoaui.managers.VerifyManager;
+import net.mcbbs.cocoaui.listener.PlayerListener;
+import net.mcbbs.cocoaui.listener.PluginMessageListener;
+import net.mcbbs.cocoaui.manager.VerifyManager;
 import net.mcbbs.cocoaui.plugin.CocoaPluginManager;
 import net.mcbbs.cocoaui.pluginmessage.Listener;
 import net.mcbbs.cocoaui.pluginmessage.PluginMessageManager;
@@ -86,7 +86,7 @@ public class CocoaUI extends JavaPlugin {
         return CocoaUI.resourcesManager;
     }
 
-    public static VerifyManager getVerfiyManager() {
+    public static VerifyManager getVerifyManager() {
         return CocoaUI.verifyManager;
     }
 

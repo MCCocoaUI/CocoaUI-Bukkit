@@ -1,4 +1,4 @@
-package net.mcbbs.cocoaui.utils;
+package net.mcbbs.cocoaui.util;
 
 import org.bukkit.inventory.ItemStack;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;

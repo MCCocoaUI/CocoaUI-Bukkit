@@ -24,7 +24,7 @@ import com.google.common.collect.Sets;
 import net.mcbbs.cocoaui.CocoaUI;
 import net.mcbbs.cocoaui.pluginmessage.packages.OutOpenResourceChooser;
 import net.mcbbs.cocoaui.pluginmessage.packages.OutResourceUpdateSent;
-import net.mcbbs.cocoaui.utils.config.ConfigException;
+import net.mcbbs.cocoaui.util.config.ConfigException;
 
 /**
  * 资源管理器主类

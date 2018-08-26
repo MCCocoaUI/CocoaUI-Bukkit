@@ -1,6 +1,6 @@
-package net.mcbbs.cocoaui.utils;
+package net.mcbbs.cocoaui.util;
 
-import net.mcbbs.cocoaui.utils.reflect.ReflectionUtils;
+import net.mcbbs.cocoaui.util.reflect.ReflectionUtils;
 import org.apache.commons.lang3.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.mcbbs.cocoaui.ui.components;
+package net.mcbbs.cocoaui.ui.component;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

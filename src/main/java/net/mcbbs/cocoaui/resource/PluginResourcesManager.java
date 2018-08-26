@@ -12,8 +12,8 @@ import com.google.gson.Gson;
 import net.mcbbs.cocoaui.CocoaUI;
 import net.mcbbs.cocoaui.pluginmessage.packages.OutResourceUpdate;
 import net.mcbbs.cocoaui.pluginmessage.packages.OutSingleResourceUpdate;
-import net.mcbbs.cocoaui.utils.config.AbstractConfiguration;
-import net.mcbbs.cocoaui.utils.config.ConfigException;
+import net.mcbbs.cocoaui.util.config.AbstractConfiguration;
+import net.mcbbs.cocoaui.util.config.ConfigException;
 
 /**
  * 插件资源管理器

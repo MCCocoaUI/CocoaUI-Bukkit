@@ -1,4 +1,4 @@
-package net.mcbbs.cocoaui.utils.reflect;
+package net.mcbbs.cocoaui.util.reflect;
 
 import org.apache.commons.lang3.Validate;
 

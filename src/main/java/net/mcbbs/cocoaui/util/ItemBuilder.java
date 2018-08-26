@@ -1,4 +1,4 @@
-package net.mcbbs.cocoaui.utils;
+package net.mcbbs.cocoaui.util;
 
 import java.util.List;
 

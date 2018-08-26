@@ -16,7 +16,7 @@
  */
 package net.mcbbs.cocoaui.ui;
 
-import net.mcbbs.cocoaui.ui.components.UnknowComponet;
+import net.mcbbs.cocoaui.ui.component.UnknowComponet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.mcbbs.cocoaui.ui.components.LableComponet.LableComponetRegister;
+import net.mcbbs.cocoaui.ui.component.LableComponet.LableComponetRegister;
 
 /**
  *

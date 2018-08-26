@@ -8,8 +8,8 @@ import org.bukkit.entity.Player;
 import net.mcbbs.cocoaui.CocoaUI;
 import net.mcbbs.cocoaui.command.StaticPages;
 import net.mcbbs.cocoaui.command.SubCommand;
-import net.mcbbs.cocoaui.utils.tellraw.HelpLine;
-import net.mcbbs.cocoaui.utils.tellraw.HelpPage;
+import net.mcbbs.cocoaui.util.tellraw.HelpLine;
+import net.mcbbs.cocoaui.util.tellraw.HelpPage;
 
 public class PictureCommand implements SubCommand {
 

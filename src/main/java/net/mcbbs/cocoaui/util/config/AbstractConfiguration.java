@@ -1,4 +1,4 @@
-package net.mcbbs.cocoaui.utils.config;
+package net.mcbbs.cocoaui.util.config;
 
 import java.io.File;
 import java.io.FileInputStream;

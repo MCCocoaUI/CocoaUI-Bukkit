@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
-import net.mcbbs.cocoaui.utils.MD5Tool;
+import net.mcbbs.cocoaui.util.MD5Tool;
 
 /**
  * 图片信息异步加载类 内部使用
