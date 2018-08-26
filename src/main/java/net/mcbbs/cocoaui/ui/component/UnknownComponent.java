@@ -86,7 +86,7 @@ public class UnknownComponent extends ContainerComponent {
         return (T) Values.get(key);
     }
 
-    public static final class UnknownComponetRegister implements ComponentRegister {
+    public static final class UnknownComponentRegister implements ComponentRegister {
 
         @Override
         public String getType() {

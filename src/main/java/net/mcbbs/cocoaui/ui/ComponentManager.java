@@ -36,7 +36,7 @@ public class ComponentManager {
 
     private static final Map<String, ComponentRegister> COMPONENT_REGISTERS = new HashMap<>();
     private static final Map<Class<? extends Component>, String> COMPONENT_CLASSES = new HashMap<>();
-    private static final ComponentRegister UNKNOWN_COMPONENT_REGISTER = new UnknownComponent.UnknownComponetRegister();
+    private static final ComponentRegister UNKNOWN_COMPONENT_REGISTER = new UnknownComponent.UnknownComponentRegister();
 
     static {
         registerComponentRegister(UNKNOWN_COMPONENT_REGISTER);
