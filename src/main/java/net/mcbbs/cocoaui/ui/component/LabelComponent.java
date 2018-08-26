@@ -32,6 +32,20 @@ public class LabelComponent extends Component {
 
     private JsonElement Text;
 
+    public LabelComponent() {
+        super.Type = "Label";
+    }
+
+    public LabelComponent(String text) {
+        this();
+        this.Text = new JsonPrimitive(text);
+    }
+
+    public LabelComponent(JsonElement Text) {
+        this();
+        this.Text = Text;
+    }
+
     @Override
     protected JsonObject toJson() {
         JsonObject json = new JsonObject();

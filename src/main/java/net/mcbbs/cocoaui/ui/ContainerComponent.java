@@ -33,7 +33,7 @@ public abstract class ContainerComponent extends Component {
     @Override
     public JsonObject toFullJson() {
         JsonObject json = super.toFullJson();
-        if (Child != null && this.hasChild() && ComponentManager.getComponentRegister(this.getName()).hasChild()) {
+        if (Child != null && this.hasChild() && ComponentManager.getComponentRegister(this.getType()).hasChild()) {
             JsonArray arr = new JsonArray();
             for (Component c : Child) {
                 arr.add(c.toFullJson());

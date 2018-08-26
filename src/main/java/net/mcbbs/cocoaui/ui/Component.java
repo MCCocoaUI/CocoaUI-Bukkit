@@ -31,7 +31,7 @@ public abstract class Component {
 
     private static int LastComponentUID = 0;
 
-    protected String Name;
+    protected String Type;
     protected String X, Y, Width, Length;
     protected int UID;
     protected boolean Visible = false;
@@ -50,6 +50,9 @@ public abstract class Component {
 
     public JsonObject toFullJson() {
         JsonObject json = toJson();
+        if(!json.has("Type")){
+            json.addProperty("Type", this.getType());
+        }
         json.addProperty("X", this.X);
         json.addProperty("Y", this.Y);
         json.addProperty("Width", this.Width);
@@ -112,12 +115,12 @@ public abstract class Component {
         this.Length = Length;
     }
 
-    public String getName() {
-        return Name;
+    public String getType() {
+        return Type;
     }
 
-    public void setName(String Name) {
-        this.Name = Name;
+    public void setType(String Type) {
+        this.Type = Type;
     }
 
     public int getUID() {

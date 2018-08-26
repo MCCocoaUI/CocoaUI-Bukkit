@@ -39,11 +39,9 @@ public class UnknownComponent extends ContainerComponent {
     private Map<String, JsonElement> Values = new HashMap<>();
     private static Set<String> KEEP_KEY = new HashSet<>(Arrays.asList("Name", "X", "Y", "Width", "Length", "UID", "Visible", "Child"));
 
-    public UnknownComponent() {
-    }
 
     public UnknownComponent(JsonObject json) {
-        super.Name = json.get("Name").getAsString();
+        super.Type = json.get("Type").getAsString();
         for (Map.Entry<String, JsonElement> e : json.entrySet()) {
             if (!KEEP_KEY.contains(e.getKey())) {
                 Values.put(e.getKey(), e.getValue());
@@ -95,7 +93,7 @@ public class UnknownComponent extends ContainerComponent {
 
         @Override
         public Component createComponent() {
-            return new UnknownComponent();
+            throw new UnsupportedOperationException("该组件不支持手动创建");
         }
 
         @Override
