@@ -17,6 +17,7 @@
 package net.mcbbs.cocoaui.ui;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import java.util.List;
 
@@ -54,6 +55,32 @@ public abstract class ContainerComponent extends Component {
 
     public void setChild(List<Component> Child) {
         this.Child = Child;
+    }
+
+    @Override
+    public void setElement(String key, JsonElement value) {
+        if ("Child".equals(key)) {
+            if (value instanceof JsonArray) {
+                JsonArray js = (JsonArray) value;
+                this.Child = ComponentManager.loadChilds(js);
+            } else {
+                throw new IllegalArgumentException("Child 的json元素必须为JsonArray");
+            }
+        }
+    }
+
+    @Override
+    public <T extends JsonElement> T getElement(String key) {
+        if ("Child".equals(key)) {
+            JsonArray ja = new JsonArray();
+            if (this.Child != null) {
+                for (Component c : this.Child) {
+                    ja.add(c.toFullJson());
+                }
+            }
+            return (T) ja;
+        }
+        return null;
     }
 
 }

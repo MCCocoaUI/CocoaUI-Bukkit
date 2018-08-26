@@ -37,8 +37,7 @@ import net.mcbbs.cocoaui.ui.ContainerComponent;
 public class UnknownComponent extends ContainerComponent {
 
     private Map<String, JsonElement> Values = new HashMap<>();
-    private static Set<String> KEEP_KEY = new HashSet<>(Arrays.asList("Name", "X", "Y", "Width", "Length", "UID", "Visible", "Child"));
-
+    private static Set<String> KEEP_KEY = new HashSet<>(Arrays.asList("Name", "X", "Y", "Width", "Length", "UID", "Visible", "Child")); 
 
     public UnknownComponent(JsonObject json) {
         super.Type = json.get("Type").getAsString();

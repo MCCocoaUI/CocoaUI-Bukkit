@@ -50,9 +50,7 @@ public abstract class Component {
 
     public JsonObject toFullJson() {
         JsonObject json = toJson();
-        if(!json.has("Type")){
-            json.addProperty("Type", this.getType());
-        }
+        json.addProperty("Type", this.getType());
         json.addProperty("X", this.X);
         json.addProperty("Y", this.Y);
         json.addProperty("Width", this.Width);
