@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
+import net.mcbbs.cocoaui.CocoaUI;
 import net.mcbbs.cocoaui.util.MD5Tool;
 
 /**
@@ -52,7 +53,7 @@ public class ResourceInfoLoader implements Callable<ResourceInfo> {
         if (this.isPicture) {
             this.loadSize();
         }
-        System.out.println("Resource " + this.name + " loaded:" + this.md5);
+        CocoaUI.getLog().info("Resource " + this.name + " loaded:" + this.md5);
         return new ResourceInfo(this.url, this.md5, this.width, this.height, this.name, pluginName);
     }
 

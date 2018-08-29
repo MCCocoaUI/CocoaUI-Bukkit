@@ -33,6 +33,7 @@ import java.util.Map;
  * @version 1.0
  * @since 2018-8-21
  */
+@SuppressWarnings("unused")
 public class ComponentManager {
 
     private static final Map<String, ComponentRegister> COMPONENT_REGISTERS = new HashMap<>();

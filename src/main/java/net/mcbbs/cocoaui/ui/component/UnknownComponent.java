@@ -78,7 +78,8 @@ public class UnknownComponent extends ContainerComponent {
         Values.put(key, value);
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public <T extends JsonElement> T getElement(String key) {
         return (T) Values.get(key);
     }

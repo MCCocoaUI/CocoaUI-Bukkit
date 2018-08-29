@@ -16,11 +16,9 @@
  */
 package net.mcbbs.cocoaui.ui.component;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.mcbbs.cocoaui.resource.Resource;
-import net.mcbbs.cocoaui.ui.ComponentManager;
 import net.mcbbs.cocoaui.ui.ContainerComponent;
 
 /**

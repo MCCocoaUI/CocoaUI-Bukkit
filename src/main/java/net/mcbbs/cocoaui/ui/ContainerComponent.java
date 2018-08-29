@@ -69,7 +69,8 @@ public abstract class ContainerComponent extends Component {
         }
     }
 
-    @Override
+	@SuppressWarnings("unchecked")
+	@Override
     public <T extends JsonElement> T getElement(String key) {
         if ("Child".equals(key)) {
             JsonArray ja = new JsonArray();
