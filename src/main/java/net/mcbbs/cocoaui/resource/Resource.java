@@ -107,14 +107,14 @@ public class Resource implements ConfigurationSerializable, Cloneable {
 		}
 		this.name = name;
 		if (defaultURL == null) {
-			throw new NullPointerException("name cannot be null");
+			throw new NullPointerException("defaultURL cannot be null");
 		}
 		this.defaultURL = defaultURL;
 		this.url = this.defaultURL;
 		this.description = description;
 		this.lock = lock;
 		if (type == null) {
-			throw new NullPointerException("name cannot be null");
+			throw new NullPointerException("type cannot be null");
 		}
 		this.type = type;
 
